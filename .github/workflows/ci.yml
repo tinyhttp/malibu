@@ -59,7 +59,7 @@ jobs:
         run: pnpm build
 
       - name: run tests
-        run: pnpm test
+        run: pnpm coverage
 
       - name: Collect coverage
         uses: codecov/codecov-action@v1.5.0
