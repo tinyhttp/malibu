@@ -1,0 +1,63 @@
+{
+  "name": "@tinyhttp/csrf",
+  "version": "0.0.0",
+  "description": "CSRF Middleware for Tinyhttp",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json",
+    "./": "./"
+  },
+  "scripts": {
+    "coverage": "c8 --reporter=lcov --reporter=text pnpm test",
+    "test": "uvu -r ts-node/register test",
+    "build": "rollup -c rollup.config.js",
+    "lint": "eslint . --ext=js,mjs,ts,cjs",
+    "format": "prettier --check \"./**/*.{ts,js,mjs,cjs}\"",
+    "format:fix": "prettier --write \"./**/*.{ts,js,mjs,cjs}\"",
+    "postinstall": "husky install",
+    "prerelease": "pnpm lint && pnpm build && pnpm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/aldy505/tinyhttp-csrf"
+  },
+  "keywords": [
+    "csrf",
+    "tinyhttp"
+  ],
+  "author": "Reinaldy Rafli <aldy505@tutanota.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "12.1.4",
+    "@commitlint/config-conventional": "12.1.4",
+    "@rollup/plugin-typescript": "8.2.1",
+    "@tinyhttp/app": "1.3.8",
+    "@tinyhttp/cookie-parser": "1.3.8",
+    "@types/node": "15.12.2",
+    "@typescript-eslint/eslint-plugin": "4.27.0",
+    "@typescript-eslint/parser": "4.27.0",
+    "c8": "7.7.3",
+    "eslint": "7.28.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "3.4.0",
+    "husky": "6.0.0",
+    "milliparsec": "1.0.4",
+    "prettier": "2.3.1",
+    "rollup": "2.52.1",
+    "supertest-fetch": "1.4.3",
+    "ts-node": "10.0.0",
+    "tslib": "2.3.0",
+    "typescript": "4.3.3",
+    "uvu": "0.5.1"
+  },
+  "dependencies": {
+    "@tinyhttp/cookie": "1.3.0",
+    "@tinyhttp/cookie-signature": "^1.3.0"
+  }
+}

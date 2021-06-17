@@ -1,0 +1,32 @@
+{
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "commonjs"
+    },
+    "include": [
+      "tests/**/*"
+    ]
+  },
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "declarationDir": "dist",
+    "target": "ES2019",
+    "module": "ESNext",
+    "declaration": true,
+    "preserveSymlinks": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "noUnusedLocals": false,
+    "noImplicitAny": false,
+    "noUnusedParameters": true,
+    "preserveConstEnums": true,
+    "skipLibCheck": true,
+    "moduleResolution": "Node",
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": ["test", "examples", "dist"]
+}
