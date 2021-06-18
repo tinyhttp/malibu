@@ -31,6 +31,7 @@
   "scripts": {
     "coverage": "c8 --reporter=lcov --reporter=text pnpm test",
     "test": "uvu -r ts-node/register test",
+    "pretest": "pnpm format:fix",
     "build": "rollup -c rollup.config.js",
     "lint": "eslint . --ext=js,mjs,ts,cjs",
     "format": "prettier --check \"./**/*.{ts,js,mjs,cjs}\"",
