@@ -5,6 +5,12 @@ interface TokenOptions {
   secretLength: number;
 }
 
+/**
+ * Token Generation.
+ * A rewrite of https://github.com/pillarjs/csrf.
+ * @class Tokens
+ * @license MIT Copyright (c) Jonathan Ong <me@jongleberry.com> and Douglas Christopher Wilson <doug@somethingdoug.com>
+ */
 export class Tokens {
   saltLength: number;
   secretLength: number;

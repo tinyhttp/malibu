@@ -13,5 +13,5 @@ export default {
     },
   ],
   plugins: [ts({ include: ["./src/**/*.ts"] })],
-  external: ["crypto", "@tinyhttp/cookie"],
+  external: ["crypto", "@tinyhttp/cookie", "@tinyhttp/cookie-signature"],
 };
