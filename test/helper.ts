@@ -52,8 +52,8 @@ export function initApp({
 }
 
 function parseOptions(options: CSRFOptions, middleware: MiddlewareOptions) {
-  if (Object.keys(options).length === 0 && middleware === 'signedCookie') {
-    return { cookie: { signed: true }}
+  if (Object.keys(options).length === 0 && middleware === "signedCookie") {
+    return { cookie: { signed: true } };
   }
-  return options
+  return options;
 }

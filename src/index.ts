@@ -67,9 +67,9 @@ const defaultOptions: CSRFOptions = {
  */
 export function csrf(opts: CSRFOptions = {}) {
   const options = Object.assign({}, defaultOptions, opts);
-  
-  if (!options.cookie?.key) options.cookie.key = '_csrf'
-  if (!options.cookie?.path) options.cookie.path = '/'
+
+  if (!options.cookie?.key) options.cookie.key = "_csrf";
+  if (!options.cookie?.path) options.cookie.path = "/";
 
   const tokens = new Tokens({
     saltLength: options.saltLength,

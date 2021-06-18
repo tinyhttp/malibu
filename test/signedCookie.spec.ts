@@ -23,8 +23,8 @@ signedOutput(
       saltLength: 10,
       secretLength: 30,
       cookie: {
-        signed: true
-      }
+        signed: true,
+      },
     };
     const { fetch } = initApp({ middleware: "signedCookie", options });
     const response = await fetch("/");
