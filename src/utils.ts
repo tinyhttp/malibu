@@ -30,7 +30,7 @@ export function randomBase62(length: number): string {
   const byteLength = Buffer.byteLength(availableCharacters);
   let salt = "";
   for (let i = 0; i < length; i++) {
-    salt += availableCharacters[Math.floor(length * Math.random())];
+    salt += availableCharacters[Math.floor(byteLength * Math.random())];
   }
 
   return salt;

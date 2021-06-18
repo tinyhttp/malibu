@@ -1,10 +1,11 @@
 import { suite } from "uvu";
 import * as assert from "uvu/assert";
+import { CSRFOptions } from "../src";
 import { initApp } from "./helper";
 
-const signedOutput = suite("unsigned cookie - output");
+const unsignedOutput = suite("unsigned cookie - output");
 
-signedOutput("should output a csrf token", async () => {
+unsignedOutput("should output a csrf token", async () => {
   const { fetch } = initApp({ middleware: "cookie" });
   const response = await fetch("/");
   const body = await response.json();
@@ -15,11 +16,45 @@ signedOutput("should output a csrf token", async () => {
   assert.type(body.token, "string");
 });
 
-signedOutput.run();
+unsignedOutput("should output a csrf token with given options (different salt & secret length)", async () => {
+  const options: CSRFOptions = {
+    saltLength: 10,
+    secretLength: 30
+  }
+  const { fetch } = initApp({ middleware: "cookie", options });
+  const response = await fetch("/");
+  const body = await response.json();
+  
+  const [salt, _] = body.token.split('-')
+  assert.is(response.status, 200);
+  assert.is(salt.length, 10)
+});
 
-const signedBody = suite("unsigned cookie - req.body");
+unsignedOutput("should output a csrf token with given options (different cookie path)", async () => {
+  const options: CSRFOptions = {
+    cookie: {
+      path: '/admin',
+      key: 'virus'
+    }
+  }
+  const { fetch } = initApp({ middleware: "cookie", options });
+  const response = await fetch("/");
+  const body = await response.json();
+  
+  const [token, path] = response.headers.get('set-cookie').split(' ')
 
-signedBody("should be able to pass through req.body", async () => {
+  assert.is(response.status, 200);
+  assert.ok(response.headers.has("set-cookie"));
+  assert.ok(token.startsWith("virus"));
+  assert.is(path.split('Path=')[1], '/admin')
+  assert.type(body.token, "string");
+});
+
+unsignedOutput.run();
+
+const unsignedBody = suite("unsigned cookie - req.body");
+
+unsignedBody("should be able to pass through req.body", async () => {
   const { fetch } = initApp({ middleware: "cookie", parser: "json" });
   const request = await fetch("/");
   const requestBody = await request.json();
@@ -37,7 +72,7 @@ signedBody("should be able to pass through req.body", async () => {
   assert.is(body.message, "hello");
 });
 
-signedBody("should not be able to pass through req.body", async () => {
+unsignedBody("should not be able to pass through req.body", async () => {
   const { fetch } = initApp({ middleware: "cookie", parser: "json" });
   const request = await fetch("/");
   const requestBody = await request.json();
@@ -55,7 +90,7 @@ signedBody("should not be able to pass through req.body", async () => {
   assert.is(body, "invalid csrf token");
 });
 
-signedBody.run();
+unsignedBody.run();
 
 const signedQuery = suite("unsigned cookie - req.query");
 signedQuery("should be able to pass through query", async () => {
@@ -80,9 +115,9 @@ signedQuery("should be able to pass through query", async () => {
 
 signedQuery.run();
 
-const signedHeader = suite("unsigned cookie - req.headers");
+const unsignedHeader = suite("unsigned cookie - req.headers");
 
-signedHeader("should be able to pass through headers csrf-token", async () => {
+unsignedHeader("should be able to pass through headers csrf-token", async () => {
   const { fetch } = initApp({ middleware: "cookie" });
   const request = await fetch("/");
   const requestBody = await request.json();
@@ -101,7 +136,7 @@ signedHeader("should be able to pass through headers csrf-token", async () => {
   assert.is(body.message, "hello");
 });
 
-signedHeader("should be able to pass through headers xsrf-token", async () => {
+unsignedHeader("should be able to pass through headers xsrf-token", async () => {
   const { fetch } = initApp({ middleware: "cookie" });
   const request = await fetch("/");
   const requestBody = await request.json();
@@ -120,7 +155,7 @@ signedHeader("should be able to pass through headers xsrf-token", async () => {
   assert.is(body.message, "hello");
 });
 
-signedHeader(
+unsignedHeader(
   "should be able to pass through headers x-csrf-token",
   async () => {
     const { fetch } = initApp({ middleware: "cookie" });
@@ -142,7 +177,7 @@ signedHeader(
   }
 );
 
-signedHeader(
+unsignedHeader(
   "should be able to pass through headers x-xsrf-token",
   async () => {
     const { fetch } = initApp({ middleware: "cookie" });
@@ -164,4 +199,4 @@ signedHeader(
   }
 );
 
-signedHeader.run();
+unsignedHeader.run();
