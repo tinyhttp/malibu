@@ -212,3 +212,40 @@ unsignedHeader(
 );
 
 unsignedHeader.run();
+
+const reusable = suite("reusable token");
+
+reusable("a", async () => {
+  const { fetch } = initApp({ middleware: "cookie" });
+  const request = await fetch("/");
+  const requestBody = await request.json();
+
+  // response #1
+  const response1 = await fetch(`/`, {
+    method: "post",
+    headers: {
+      cookie: request.headers.get("set-cookie"),
+      "x-xsrf-token": requestBody.token,
+    },
+  });
+
+  const body1 = await response1.json();
+
+  // response #2
+  const response2 = await fetch(`/`, {
+    method: "post",
+    headers: {
+      cookie: request.headers.get("set-cookie"),
+      "x-xsrf-token": requestBody.token,
+    },
+  });
+
+  const body2 = await response2.json();
+
+  assert.is(response1.status, 200);
+  assert.is(response2.status, 200);
+  assert.equal(body1.message, "hello");
+  assert.equal(body2.message, "hello");
+});
+
+reusable.run();

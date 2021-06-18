@@ -1,6 +1,3 @@
-// TODO: test salt length & secret length
-// TODO: test timeSafeCompare()
-
 import { suite } from "uvu";
 import * as assert from "uvu/assert";
 import { timeSafeCompare } from "../src/utils";

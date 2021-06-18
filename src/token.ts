@@ -15,9 +15,9 @@ export class Tokens {
   saltLength: number;
   secretLength: number;
 
-  constructor(options: Partial<TokenOptions>) {
-    this.saltLength = options?.saltLength;
-    this.secretLength = options?.secretLength;
+  constructor(options: TokenOptions) {
+    this.saltLength = options.saltLength;
+    this.secretLength = options.secretLength;
   }
 
   create(secret: string): string {

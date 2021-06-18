@@ -3,3 +3,4 @@
 
 pnpm format:fix
 pnpm test
+git add .

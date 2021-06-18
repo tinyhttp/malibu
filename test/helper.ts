@@ -1,3 +1,4 @@
+import { randomBytes } from "crypto";
 import { makeFetch } from "supertest-fetch";
 import { App } from "@tinyhttp/app";
 import { cookieParser } from "@tinyhttp/cookie-parser";
@@ -13,8 +14,7 @@ interface initAppOptions {
   options?: CSRFOptions;
 }
 
-// not so secret anymore, huh?
-const secret = "5ifqHE5eojYNf4p2AHFApUJpWTqgCe7e";
+const secret = randomBytes(32).toString("base64");
 
 export function initApp({
   parser = "urlencoded",

@@ -78,7 +78,7 @@ export function csrf(opts: CSRFOptions = {}) {
 
   return (req: Request, res: Response, next: NextFunction) => {
     if (!verifyConfiguration(req, options.sessionKey, options.cookie)) {
-      return next("misconfigured csrf");
+      throw new Error("misconfigured csrf");
     }
 
     let secret = getSecret(req, options.sessionKey, options.cookie);

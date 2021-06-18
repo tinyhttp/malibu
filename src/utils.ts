@@ -65,9 +65,5 @@ export function timeSafeCompare(a: string, b: string): boolean {
   const aHMAC = createHmac("sha256", key).update(String(a)).digest();
   const bHMAC = createHmac("sha256", key).update(String(b)).digest();
 
-  if (aHMAC.length !== bHMAC.length) {
-    return false;
-  }
-
   return timingSafeEqual(aHMAC, bHMAC);
 }
