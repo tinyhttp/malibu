@@ -46,8 +46,8 @@ const app = new App()
 const csrfProtection = csrf({ cookie: { signed: true }})
 app.use(cookieParser(process.env.COOKIE_SECRET))
 
-// this lets you acquire CSRF token on response body
-// you also have CSRF token on your cookies as _csrf
+// this lets you acquire CSRF token on the response body
+// you also have a CSRF token on your cookies as _csrf
 app.get("/", csrfProtection, (req, res) => {
   res.status(200).json({ token: req.csrfToken() });
 });
@@ -62,7 +62,7 @@ app.post("/", csrfProtection, (req, res) => {
 
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
-| cookie | `CookieOptions` | `{ signed: false, key: '_csrf', path: '/' }` | `signed` specifies whether the cookie is signed or unsigned, `key` specifies to the cookie key, `path` specifies the domain of the cookie. Other options please refer to [@tinyhttp/cookie serializer options](https://github.com/tinyhttp/tinyhttp/tree/master/packages/cookie#options-1) |
+| cookie | `CookieOptions` | `{ signed: false, key: '_csrf', path: '/' }` | `signed` specifies whether the cookie is signed or unsigned, `key` specifies to the cookie key, `path` specifies the domain of the cookie. For other options please refer to [@tinyhttp/cookie serializer options](https://github.com/tinyhttp/tinyhttp/tree/master/packages/cookie#options-1) |
 | sessionKey | `string` | `session` | Specifies session key name |
 | value | `(req: Request) => any` | `req.body._csrf, req.query._csrf, req.headers["csrf-token"], req.headers["xsrf-token"], req.headers["x-csrf-token"], req.headers["x-xsrf-token"]` | Specifies where to look for the CSRF token |
 | ignoreMethod | `Array<HTTPMethod>` | `["GET", "HEAD", "OPTIONS"]` | Specifies the HTTP Method in which CSRF protection will be disabled |

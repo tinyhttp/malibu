@@ -1,17 +1,17 @@
-import ts from "@rollup/plugin-typescript";
+import ts from '@rollup/plugin-typescript'
 
 export default {
-  input: "src/index.ts",
+  input: 'src/index.ts',
   output: [
     {
-      file: "dist/index.cjs",
-      format: "cjs",
+      file: 'dist/index.cjs',
+      format: 'cjs'
     },
     {
-      dir: "dist",
-      format: "esm",
-    },
+      dir: 'dist',
+      format: 'esm'
+    }
   ],
-  plugins: [ts({ include: ["./src/**/*.ts"] })],
-  external: ["crypto", "@tinyhttp/cookie", "@tinyhttp/cookie-signature"],
-};
+  plugins: [ts({ include: ['./src/**/*.ts'] })],
+  external: ['crypto', '@tinyhttp/cookie', '@tinyhttp/cookie-signature']
+}
