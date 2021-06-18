@@ -12,7 +12,7 @@ signedOutput("should output a csrf token", async () => {
 
   assert.is(response.status, 200);
   assert.ok(response.headers.has("set-cookie"));
-  assert.ok(response.headers.get("set-cookie").startsWith("_csrf="));
+  assert.ok(response.headers.get("set-cookie").startsWith("_csrf=s%3A"));
   assert.type(body.token, "string");
 });
 
@@ -22,6 +22,9 @@ signedOutput(
     const options: CSRFOptions = {
       saltLength: 10,
       secretLength: 30,
+      cookie: {
+        signed: true
+      }
     };
     const { fetch } = initApp({ middleware: "signedCookie", options });
     const response = await fetch("/");
@@ -38,6 +41,7 @@ signedOutput(
   async () => {
     const options: CSRFOptions = {
       cookie: {
+        signed: true,
         path: "/admin",
         key: "virus",
       },

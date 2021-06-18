@@ -22,7 +22,7 @@ export function initApp({
   middleware = "cookie",
 }: initAppOptions) {
   const app = new App();
-  const csrfProtection = csrf(options);
+  const csrfProtection = csrf(parseOptions(options, middleware));
 
   if (parser === "urlencoded") {
     app.use(urlencoded());
@@ -49,4 +49,11 @@ export function initApp({
   const fetch = makeFetch(server);
 
   return { fetch, app, server };
+}
+
+function parseOptions(options: CSRFOptions, middleware: MiddlewareOptions) {
+  if (Object.keys(options).length === 0 && middleware === 'signedCookie') {
+    return { cookie: { signed: true }}
+  }
+  return options
 }

@@ -1,5 +1,5 @@
 import { serialize, SerializeOptions } from "@tinyhttp/cookie";
-import { Request, Response, NextFunction, Middleware } from "@tinyhttp/app";
+import { Request, Response, NextFunction } from "@tinyhttp/app";
 import { sign } from "@tinyhttp/cookie-signature";
 import { Tokens } from "./token";
 
@@ -56,7 +56,7 @@ const defaultOptions: CSRFOptions = {
  * Initiate CSRF (Cross-Site Request Forgery) Protection middleware.
  * @function csrf
  * @param {CSRFOptions} opts Given configuration options
- * @returns {Middleware} CSRF Protection Middleware
+ * @returns {RouterHandler} CSRF Protection Middleware
  * @example
  * const csrfProtection = csrf()
  * app.use(cookieParser())
@@ -65,8 +65,11 @@ const defaultOptions: CSRFOptions = {
  *   res.status(200).json({ token: req.csrfToken() });
  * });
  */
-export function csrf(opts: CSRFOptions = {}): Middleware {
+export function csrf(opts: CSRFOptions = {}) {
   const options = Object.assign({}, defaultOptions, opts);
+  
+  if (!options.cookie?.key) options.cookie.key = '_csrf'
+  if (!options.cookie?.path) options.cookie.path = '/'
 
   const tokens = new Tokens({
     saltLength: options.saltLength,
