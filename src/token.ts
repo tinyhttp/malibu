@@ -16,8 +16,8 @@ export class Tokens {
   secretLength: number;
 
   constructor(options: Partial<TokenOptions>) {
-    this.saltLength = options?.saltLength || 8;
-    this.secretLength = options?.secretLength || 18;
+    this.saltLength = options?.saltLength;
+    this.secretLength = options?.secretLength;
   }
 
   create(secret: string): string {

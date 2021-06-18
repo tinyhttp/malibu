@@ -34,7 +34,7 @@ export interface CSRFOptions {
 }
 
 /**
- * Options for cookie value. 
+ * Options for cookie value.
  * Extends SerializeOptions from @tinyhttp/cookie.
  */
 export type CookieOptions = SerializeOptions & {
@@ -53,14 +53,14 @@ const defaultOptions: CSRFOptions = {
 };
 
 /**
- * Initiate CSRF (Cross-Site Request Forgery) Protection middleware. 
+ * Initiate CSRF (Cross-Site Request Forgery) Protection middleware.
  * @function csrf
- * @param {CSRFOptions} opts Given configuration options 
- * @returns {Middleware} CSRF Protection Middleware 
+ * @param {CSRFOptions} opts Given configuration options
+ * @returns {Middleware} CSRF Protection Middleware
  * @example
  * const csrfProtection = csrf()
- * app.use(cookieParser()) 
- * 
+ * app.use(cookieParser())
+ *
  * app.get("/", csrfProtection, (req, res) => {
  *   res.status(200).json({ token: req.csrfToken() });
  * });
@@ -142,7 +142,11 @@ function verifyConfiguration(
   return true;
 }
 
-function getSecret(req: Request, sessionKey: string, cookie: CookieOptions): string {
+function getSecret(
+  req: Request,
+  sessionKey: string,
+  cookie: CookieOptions
+): string {
   const bag = getSecretBag(req, sessionKey, cookie);
   if (!bag) {
     throw new Error("misconfigured csrf");
@@ -151,7 +155,11 @@ function getSecret(req: Request, sessionKey: string, cookie: CookieOptions): str
   return bag[cookie.key];
 }
 
-function getSecretBag(req: Request, sessionKey: string, cookie: CookieOptions): string {
+function getSecretBag(
+  req: Request,
+  sessionKey: string,
+  cookie: CookieOptions
+): string {
   if (cookie) {
     return cookie.signed ? req?.signedCookies : req?.cookies;
   }

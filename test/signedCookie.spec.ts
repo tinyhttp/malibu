@@ -16,40 +16,45 @@ signedOutput("should output a csrf token", async () => {
   assert.type(body.token, "string");
 });
 
+signedOutput(
+  "should output a csrf token with given options (different salt & secret length)",
+  async () => {
+    const options: CSRFOptions = {
+      saltLength: 10,
+      secretLength: 30,
+    };
+    const { fetch } = initApp({ middleware: "signedCookie", options });
+    const response = await fetch("/");
+    const body = await response.json();
 
-signedOutput("should output a csrf token with given options (different salt & secret length)", async () => {
-  const options: CSRFOptions = {
-    saltLength: 10,
-    secretLength: 30
+    const [salt, _] = body.token.split("-");
+    assert.is(response.status, 200);
+    assert.is(salt.length, 10);
   }
-  const { fetch } = initApp({ middleware: "signedCookie", options });
-  const response = await fetch("/");
-  const body = await response.json();
-  
-  const [salt, _] = body.token.split('-')
-  assert.is(response.status, 200);
-  assert.is(salt.length, 10)
-});
+);
 
-signedOutput("should output a csrf token with given options (different cookie path)", async () => {
-  const options: CSRFOptions = {
-    cookie: {
-      path: '/admin',
-      key: 'virus'
-    }
+signedOutput(
+  "should output a csrf token with given options (different cookie path)",
+  async () => {
+    const options: CSRFOptions = {
+      cookie: {
+        path: "/admin",
+        key: "virus",
+      },
+    };
+    const { fetch } = initApp({ middleware: "signedCookie", options });
+    const response = await fetch("/");
+    const body = await response.json();
+
+    const [token, path] = response.headers.get("set-cookie").split(" ");
+
+    assert.is(response.status, 200);
+    assert.ok(response.headers.has("set-cookie"));
+    assert.ok(token.startsWith("virus"));
+    assert.is(path.split("Path=")[1], "/admin");
+    assert.type(body.token, "string");
   }
-  const { fetch } = initApp({ middleware: "signedCookie", options });
-  const response = await fetch("/");
-  const body = await response.json();
-  
-  const [token, path] = response.headers.get('set-cookie').split(' ')
-
-  assert.is(response.status, 200);
-  assert.ok(response.headers.has("set-cookie"));
-  assert.ok(token.startsWith("virus"));
-  assert.is(path.split('Path=')[1], '/admin')
-  assert.type(body.token, "string");
-});
+);
 
 signedOutput.run();
 

@@ -16,39 +16,45 @@ unsignedOutput("should output a csrf token", async () => {
   assert.type(body.token, "string");
 });
 
-unsignedOutput("should output a csrf token with given options (different salt & secret length)", async () => {
-  const options: CSRFOptions = {
-    saltLength: 10,
-    secretLength: 30
-  }
-  const { fetch } = initApp({ middleware: "cookie", options });
-  const response = await fetch("/");
-  const body = await response.json();
-  
-  const [salt, _] = body.token.split('-')
-  assert.is(response.status, 200);
-  assert.is(salt.length, 10)
-});
+unsignedOutput(
+  "should output a csrf token with given options (different salt & secret length)",
+  async () => {
+    const options: CSRFOptions = {
+      saltLength: 10,
+      secretLength: 30,
+    };
+    const { fetch } = initApp({ middleware: "cookie", options });
+    const response = await fetch("/");
+    const body = await response.json();
 
-unsignedOutput("should output a csrf token with given options (different cookie path)", async () => {
-  const options: CSRFOptions = {
-    cookie: {
-      path: '/admin',
-      key: 'virus'
-    }
+    const [salt, _] = body.token.split("-");
+    assert.is(response.status, 200);
+    assert.is(salt.length, 10);
   }
-  const { fetch } = initApp({ middleware: "cookie", options });
-  const response = await fetch("/");
-  const body = await response.json();
-  
-  const [token, path] = response.headers.get('set-cookie').split(' ')
+);
 
-  assert.is(response.status, 200);
-  assert.ok(response.headers.has("set-cookie"));
-  assert.ok(token.startsWith("virus"));
-  assert.is(path.split('Path=')[1], '/admin')
-  assert.type(body.token, "string");
-});
+unsignedOutput(
+  "should output a csrf token with given options (different cookie path)",
+  async () => {
+    const options: CSRFOptions = {
+      cookie: {
+        path: "/admin",
+        key: "virus",
+      },
+    };
+    const { fetch } = initApp({ middleware: "cookie", options });
+    const response = await fetch("/");
+    const body = await response.json();
+
+    const [token, path] = response.headers.get("set-cookie").split(" ");
+
+    assert.is(response.status, 200);
+    assert.ok(response.headers.has("set-cookie"));
+    assert.ok(token.startsWith("virus"));
+    assert.is(path.split("Path=")[1], "/admin");
+    assert.type(body.token, "string");
+  }
+);
 
 unsignedOutput.run();
 
@@ -117,43 +123,49 @@ signedQuery.run();
 
 const unsignedHeader = suite("unsigned cookie - req.headers");
 
-unsignedHeader("should be able to pass through headers csrf-token", async () => {
-  const { fetch } = initApp({ middleware: "cookie" });
-  const request = await fetch("/");
-  const requestBody = await request.json();
+unsignedHeader(
+  "should be able to pass through headers csrf-token",
+  async () => {
+    const { fetch } = initApp({ middleware: "cookie" });
+    const request = await fetch("/");
+    const requestBody = await request.json();
 
-  const response = await fetch(`/`, {
-    method: "post",
-    headers: {
-      cookie: request.headers.get("set-cookie"),
-      "csrf-token": requestBody.token,
-    },
-  });
+    const response = await fetch(`/`, {
+      method: "post",
+      headers: {
+        cookie: request.headers.get("set-cookie"),
+        "csrf-token": requestBody.token,
+      },
+    });
 
-  const body = await response.json();
+    const body = await response.json();
 
-  assert.is(response.status, 200);
-  assert.is(body.message, "hello");
-});
+    assert.is(response.status, 200);
+    assert.is(body.message, "hello");
+  }
+);
 
-unsignedHeader("should be able to pass through headers xsrf-token", async () => {
-  const { fetch } = initApp({ middleware: "cookie" });
-  const request = await fetch("/");
-  const requestBody = await request.json();
+unsignedHeader(
+  "should be able to pass through headers xsrf-token",
+  async () => {
+    const { fetch } = initApp({ middleware: "cookie" });
+    const request = await fetch("/");
+    const requestBody = await request.json();
 
-  const response = await fetch(`/`, {
-    method: "post",
-    headers: {
-      cookie: request.headers.get("set-cookie"),
-      "xsrf-token": requestBody.token,
-    },
-  });
+    const response = await fetch(`/`, {
+      method: "post",
+      headers: {
+        cookie: request.headers.get("set-cookie"),
+        "xsrf-token": requestBody.token,
+      },
+    });
 
-  const body = await response.json();
+    const body = await response.json();
 
-  assert.is(response.status, 200);
-  assert.is(body.message, "hello");
-});
+    assert.is(response.status, 200);
+    assert.is(body.message, "hello");
+  }
+);
 
 unsignedHeader(
   "should be able to pass through headers x-csrf-token",
