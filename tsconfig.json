@@ -20,7 +20,7 @@
     "esModuleInterop": true,
     "downlevelIteration": true,
     "noUnusedLocals": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noUnusedParameters": true,
     "preserveConstEnums": true,
     "skipLibCheck": true,
