@@ -5,7 +5,7 @@
       "module": "commonjs"
     },
     "include": [
-      "tests/**/*"
+      "test/**/*"
     ]
   },
   "compilerOptions": {

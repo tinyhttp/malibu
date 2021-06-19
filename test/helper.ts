@@ -1,9 +1,9 @@
 import { randomBytes } from 'crypto'
 import { makeFetch } from 'supertest-fetch'
-import { App } from '@tinyhttp/app'
+import { App, Request, Response } from '@tinyhttp/app'
 import { cookieParser } from '@tinyhttp/cookie-parser'
 import { json, urlencoded } from 'milliparsec'
-import { csrf, CSRFOptions } from '../src/index'
+import { csrf, CSRFOptions, CSRFRequest } from '../src/index'
 
 type ParserOptions = 'urlencoded' | 'json'
 type MiddlewareOptions = 'cookie' | 'signedCookie' | 'session'
@@ -17,7 +17,7 @@ interface initAppOptions {
 const secret = randomBytes(32).toString('base64')
 
 export function initApp({ parser = 'urlencoded', options = {}, middleware = 'cookie' }: initAppOptions) {
-  const app = new App()
+  const app = new App<any, Request & CSRFRequest, Response>()
   const csrfProtection = csrf(parseOptions(options, middleware))
 
   if (parser === 'urlencoded') {
@@ -37,6 +37,7 @@ export function initApp({ parser = 'urlencoded', options = {}, middleware = 'coo
   app.get('/', csrfProtection, (req, res) => {
     res.status(200).json({ token: req.csrfToken() })
   })
+
   app.post('/', csrfProtection, (req, res) => {
     res.status(200).json({ message: 'hello' })
   })

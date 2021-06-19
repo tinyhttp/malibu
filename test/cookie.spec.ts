@@ -75,11 +75,11 @@ unsignedBody('should be able to pass through req.body', async () => {
 unsignedBody('should not be able to pass through req.body', async () => {
   const { fetch } = initApp({ middleware: 'cookie', parser: 'json' })
   const request = await fetch('/')
-  const requestBody = await request.json()
 
   const response = await fetch('/', {
+    timeout: 5000,
     method: 'post',
-    body: JSON.stringify({}),
+    body: '{}',
     headers: {
       cookie: request.headers.get('set-cookie')
     }
@@ -92,8 +92,8 @@ unsignedBody('should not be able to pass through req.body', async () => {
 
 unsignedBody.run()
 
-const signedQuery = suite('unsigned cookie - req.query')
-signedQuery('should be able to pass through query', async () => {
+const unsignedQuery = suite('unsigned cookie - req.query')
+unsignedQuery('should be able to pass through query', async () => {
   const { fetch } = initApp({ middleware: 'cookie' })
   const request = await fetch('/')
   const requestBody = await request.json()
@@ -110,7 +110,7 @@ signedQuery('should be able to pass through query', async () => {
   assert.is(body.message, 'hello')
 })
 
-signedQuery.run()
+unsignedQuery.run()
 
 const unsignedHeader = suite('unsigned cookie - req.headers')
 

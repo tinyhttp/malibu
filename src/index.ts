@@ -1,12 +1,16 @@
+import { IncomingMessage, ServerResponse } from 'http'
+import { ParsedUrlQuery } from 'querystring'
 import { serialize, SerializeOptions } from '@tinyhttp/cookie'
-import { Request, Response, NextFunction } from '@tinyhttp/app'
 import { sign } from '@tinyhttp/cookie-signature'
 import { Tokens } from './token'
 
-declare module '@tinyhttp/app' {
-  interface Request {
-    csrfToken(): string
-  }
+export interface CSRFRequest extends IncomingMessage {
+  csrfToken(): string
+  secret?: string | string[]
+  signedCookies?: any
+  cookies?: any
+  query?: ParsedUrlQuery
+  body?: any
 }
 
 // HTTP Method according to MDN (https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
@@ -19,8 +23,8 @@ type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEA
 export interface CSRFOptions {
   cookie?: CookieOptions
   sessionKey?: string
-  value?: (req: Request) => any
-  ignoreMethod?: Array<HTTPMethod>
+  value?: (req: CSRFRequest | IncomingMessage) => any
+  ignoreMethod?: HTTPMethod[]
   saltLength?: number
   secretLength?: number
 }
@@ -68,7 +72,7 @@ export function csrf(opts: CSRFOptions = {}) {
     secretLength: options.secretLength
   })
 
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: CSRFRequest, res: ServerResponse, next: () => void) => {
     if (!verifyConfiguration(req, options.sessionKey, options.cookie)) {
       throw new Error('misconfigured csrf')
     }
@@ -98,14 +102,16 @@ export function csrf(opts: CSRFOptions = {}) {
     }
 
     if (!options.ignoreMethod.includes(req.method as HTTPMethod) && !tokens.verify(secret, options.value(req))) {
-      return res.status(403).send('invalid csrf token')
+      return res
+        .writeHead(403, 'invalid csrf token', { 'Content-Type': 'text/plain' })
+        .end('invalid csrf token', 'utf8')
     }
 
     next()
   }
 }
 
-function defaultValue(req: Request): string | Array<string> {
+function defaultValue(req: CSRFRequest): string | string[] {
   return (
     req.body?._csrf ||
     req.query?._csrf ||
@@ -116,7 +122,7 @@ function defaultValue(req: Request): string | Array<string> {
   )
 }
 
-function verifyConfiguration(req: Request, sessionKey: string, cookie: CookieOptions): boolean {
+function verifyConfiguration(req: CSRFRequest, sessionKey: string, cookie: CookieOptions): boolean {
   if (!getSecretBag(req, sessionKey, cookie)) {
     return false
   }
@@ -128,7 +134,7 @@ function verifyConfiguration(req: Request, sessionKey: string, cookie: CookieOpt
   return true
 }
 
-function getSecret(req: Request, sessionKey: string, cookie: CookieOptions): string {
+function getSecret(req: CSRFRequest, sessionKey: string, cookie: CookieOptions): string {
   const bag = getSecretBag(req, sessionKey, cookie)
   if (!bag) {
     throw new Error('misconfigured csrf')
@@ -137,14 +143,20 @@ function getSecret(req: Request, sessionKey: string, cookie: CookieOptions): str
   return bag[cookie.key]
 }
 
-function getSecretBag(req: Request, sessionKey: string, cookie: CookieOptions): string {
+function getSecretBag(req: CSRFRequest, sessionKey: string, cookie: CookieOptions): string {
   if (cookie) {
     return cookie.signed ? req?.signedCookies : req?.cookies
   }
   return req[sessionKey]
 }
 
-function setSecret(req: Request, res: Response, sessionKey: string, secret: string, cookie: CookieOptions): void {
+function setSecret(
+  req: CSRFRequest,
+  res: ServerResponse,
+  sessionKey: string,
+  secret: string,
+  cookie: CookieOptions
+): void {
   if (cookie) {
     const value = cookie.signed ? `s:${sign(secret, req.secret as string)}` : secret
     setCookie(res, cookie.key, value, cookie)
@@ -154,8 +166,8 @@ function setSecret(req: Request, res: Response, sessionKey: string, secret: stri
   req[sessionKey].csrfSecret = secret
 }
 
-function setCookie(res: Response, name: string, secret: string, cookie: CookieOptions): void {
+function setCookie(res: ServerResponse, name: string, secret: string, cookie: CookieOptions): void {
   const data = serialize(name, secret, cookie)
-  const previousHeader = (res.getHeader('set-cookie') as Array<string>) ?? []
+  const previousHeader = (res.getHeader('set-cookie') as string[]) ?? []
   res.setHeader('set-cookie', Array.isArray(previousHeader) ? previousHeader.concat(data) : [previousHeader, data])
 }
