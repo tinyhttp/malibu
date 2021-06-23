@@ -1,5 +1,5 @@
 {
-  "name": "@tinyhttp/csrf",
+  "name": "tinyhttp-csrf",
   "version": "0.0.0",
   "description": "CSRF Middleware for Tinyhttp",
   "keywords": [
