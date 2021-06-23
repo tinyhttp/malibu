@@ -1,28 +1,28 @@
 {
   "name": "tinyhttp-csrf",
   "version": "0.0.2",
-  "description": "CSRF Middleware for Tinyhttp",
+  "description": "Framework agnostic CSRF middleware",
   "keywords": [
     "csrf",
-    "tinyhttp"
+    "middleware",
+    "framework agnostic"
   ],
   "author": "Reinaldy Rafli <aldy505@tutanota.com>",
   "license": "MIT",
   "type": "module",
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "module": "./dist/index.js",
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index.js"
     },
     "./package.json": "./package.json",
     "./": "./"
   },
   "files": [
     "dist/index.js",
-    "dist/index.cjs",
     "dist/index.d.ts",
     "dist/token.d.ts",
     "dist/utils.d.ts",
@@ -50,7 +50,8 @@
   "homepage": "https://github.com/aldy505/tinyhttp-csrf#readme",
   "directories": {
     "test": "./test",
-    "lib": "./src"
+    "lib": "./src",
+    "example": "./examples"
   },
   "devDependencies": {
     "@commitlint/cli": "12.1.4",
@@ -66,9 +67,7 @@
     "@typescript-eslint/parser": "4.28.0",
     "c8": "7.7.3",
     "cookie-parser": "1.4.5",
-    "esbuild": "^0.12.9",
     "esbuild-node-loader": "^0.1.1",
-    "esbuild-runner": "^2.2.0",
     "eslint": "7.29.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",

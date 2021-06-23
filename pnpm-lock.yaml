@@ -16,9 +16,7 @@ specifiers:
   '@typescript-eslint/parser': 4.28.0
   c8: 7.7.3
   cookie-parser: 1.4.5
-  esbuild: ^0.12.9
   esbuild-node-loader: ^0.1.1
-  esbuild-runner: ^2.2.0
   eslint: 7.29.0
   eslint-config-prettier: 8.3.0
   eslint-plugin-prettier: 3.4.0
@@ -51,9 +49,7 @@ devDependencies:
   '@typescript-eslint/parser': 4.28.0_eslint@7.29.0+typescript@4.3.4
   c8: 7.7.3
   cookie-parser: 1.4.5
-  esbuild: 0.12.9
   esbuild-node-loader: 0.1.1
-  esbuild-runner: 2.2.0_esbuild@0.12.9
   eslint: 7.29.0
   eslint-config-prettier: 8.3.0_eslint@7.29.0
   eslint-plugin-prettier: 3.4.0_de2986b0c29d2faa795004f5443c76d1
@@ -797,10 +793,6 @@ packages:
       fill-range: 7.0.1
     dev: true
 
-  /buffer-from/1.1.1:
-    resolution: {integrity: sha512-MQcXEUbCKtEo7bhqEs6560Hyd4XaovZlO/k9V3hjVUF/zwW7KBVdSK4gIt/bzwS9MbR5qob+F5jusZsb0YQK2A==}
-    dev: true
-
   /bytes/3.1.0:
     resolution: {integrity: sha512-zauLjrfCG+xvoyaqLoV8bLVXXNGC4JqlxFCutSDWA6fJrTo2ZuvLYTqZ7aHBLZSMOopbzwv8f+wZcVzfVTI2Dg==}
     engines: {node: '>= 0.8'}
@@ -1178,17 +1170,6 @@ packages:
     resolution: {integrity: sha512-n24xYzMfKmPupUZgs0QYBr52HUSh1M1vDtBfkEVa6pdENqo5+U5WP+zaj4Iw2MinuYk1axLW8+NVutrBCkrdmA==}
     dependencies:
       esbuild: 0.12.9
-    dev: true
-
-  /esbuild-runner/2.2.0_esbuild@0.12.9:
-    resolution: {integrity: sha512-Ew8AF48i+edfI37qA157g5gQVsgBd8kbg0rOiGDZGxnf3/aUK9GXSYHGcfP5RNZF/6ziJWT0sD96jAfssYi0qQ==}
-    hasBin: true
-    peerDependencies:
-      esbuild: '*'
-    dependencies:
-      esbuild: 0.12.9
-      source-map-support: 0.5.19
-      tslib: 2.2.0
     dev: true
 
   /esbuild/0.12.9:
@@ -2565,18 +2546,6 @@ packages:
       is-fullwidth-code-point: 3.0.0
     dev: true
 
-  /source-map-support/0.5.19:
-    resolution: {integrity: sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==}
-    dependencies:
-      buffer-from: 1.1.1
-      source-map: 0.6.1
-    dev: true
-
-  /source-map/0.6.1:
-    resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
-    engines: {node: '>=0.10.0'}
-    dev: true
-
   /source-map/0.7.3:
     resolution: {integrity: sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==}
     engines: {node: '>= 8'}
@@ -2751,10 +2720,6 @@ packages:
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
-    dev: true
-
-  /tslib/2.2.0:
-    resolution: {integrity: sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==}
     dev: true
 
   /tslib/2.3.0:
