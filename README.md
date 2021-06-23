@@ -1,4 +1,4 @@
-# @tinyhttp/csrf
+# Malibu
 
 <!-- badges goes here -->
 
@@ -9,7 +9,7 @@ This middleware helps web developers fight [CSRF](https://en.wikipedia.org/wiki/
 ## Install
 This is still on alpha. Please use with caution.
 ```
-pnpm i tinyhttp-csrf
+pnpm i malibu
 ```
 
 # Usage
@@ -19,7 +19,7 @@ Like all CSRF plugin, it depends on either Cookie Parser or Session middleware. 
 ```js
 import { App } from '@tinyhttp/app'
 import { cookieParser } from '@tinyhttp/cookie-parser'
-import { csrf } from '@tinyhttp/csrf'
+import { csrf } from 'malibu'
 import { json, urlencoded } from 'milliparsec'
 
 const app = new App()
@@ -58,6 +58,8 @@ app.post("/", csrfProtection, (req, res) => {
 });
 ```
 
+For other framework appliances, please refer to [examples](https://github.com/tinyhttp/malibu/tree/master/examples)
+
 ## Options
 
 | Name | Type | Default | Description |
@@ -68,3 +70,8 @@ app.post("/", csrfProtection, (req, res) => {
 | ignoreMethod | `Array<HTTPMethod>` | `["GET", "HEAD", "OPTIONS"]` | Specifies the HTTP Method in which CSRF protection will be disabled |
 | saltLength | `number` | `8` | Specifies the salt length for CSRF token |
 | secretLength | `number` | `18` | Specifies the secret length for CSRF Token |
+
+
+## Why "malibu"?
+
+It's one variation of a longboard used in surfing. It's a 60's style longboard, made with heavy glass, long parallel 50/50 rails, and a deep single fin. Made especially for trimming, (walking the board) and for noseriding. Not to mention, it looks cool.

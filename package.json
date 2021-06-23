@@ -1,6 +1,6 @@
 {
-  "name": "tinyhttp-csrf",
-  "version": "0.0.2",
+  "name": "malibu",
+  "version": "1.0.0",
   "description": "Framework agnostic CSRF middleware",
   "keywords": [
     "csrf",
@@ -42,16 +42,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aldy505/tinyhttp-csrf"
+    "url": "git+https://github.com/tinyhttp/malibu"
   },
   "bugs": {
-    "url": "https://github.com/aldy505/tinyhttp-csrf/issues"
+    "url": "https://github.com/tinyhttp/malibu/issues"
   },
-  "homepage": "https://github.com/aldy505/tinyhttp-csrf#readme",
+  "homepage": "https://github.com/tinyhttp/malibu#readme",
   "directories": {
     "test": "./test",
     "lib": "./src",
     "example": "./examples"
+  },
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "12.1.4",
