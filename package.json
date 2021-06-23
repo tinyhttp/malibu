@@ -1,6 +1,6 @@
 {
   "name": "tinyhttp-csrf",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "CSRF Middleware for Tinyhttp",
   "keywords": [
     "csrf",
