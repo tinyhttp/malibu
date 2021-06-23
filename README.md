@@ -14,7 +14,7 @@ pnpm i malibu
 
 # Usage
 
-Like all CSRF plugin, it depends on either Cookie Parser or Session middleware. As of now (June 2021), @tinyhttp ecosystem doesn't have its' own Session middleware. We'll have to make do with Cookie Parser for now.
+Like all CSRF plugins, it depends on either Cookie Parser or Session middleware.
 
 ```js
 import { App } from '@tinyhttp/app'
