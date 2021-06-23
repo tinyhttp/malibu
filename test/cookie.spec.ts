@@ -1,6 +1,6 @@
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { CSRFOptions } from '../src'
+import type { CSRFOptions } from '../src/index'
 import { initApp } from './helper'
 
 const unsignedOutput = suite('unsigned cookie - output')
@@ -58,12 +58,12 @@ unsignedBody('should be able to pass through req.body', async () => {
   const { fetch } = initApp({ middleware: 'cookie', parser: 'json' })
   const request = await fetch('/')
   const requestBody = await request.json()
-
   const response = await fetch('/', {
     method: 'post',
-    body: JSON.stringify({ _csrf: requestBody.token }),
+    body: JSON.stringify({ _csrf: requestBody.token, hello: 'there' }),
     headers: {
-      cookie: request.headers.get('set-cookie')
+      cookie: request.headers.get('set-cookie'),
+      'content-type': 'application/json'
     }
   })
   const body = await response.json()
@@ -81,7 +81,8 @@ unsignedBody('should not be able to pass through req.body', async () => {
     method: 'post',
     body: '{}',
     headers: {
-      cookie: request.headers.get('set-cookie')
+      cookie: request.headers.get('set-cookie'),
+      'content-type': 'application/json'
     }
   })
   const body = await response.text()
@@ -101,7 +102,8 @@ unsignedQuery('should be able to pass through query', async () => {
   const response = await fetch(`/?_csrf=${encodeURIComponent(requestBody.token)}`, {
     method: 'post',
     headers: {
-      cookie: request.headers.get('set-cookie')
+      cookie: request.headers.get('set-cookie'),
+      'content-type': 'application/x-www-form-urlencoded'
     }
   })
   const body = await response.json()

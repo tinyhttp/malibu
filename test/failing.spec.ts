@@ -3,7 +3,8 @@ import { App, Request } from '@tinyhttp/app'
 import { urlencoded } from 'milliparsec'
 import { suite } from 'uvu'
 import * as assert from 'uvu/assert'
-import { csrf, CSRFRequest } from '../src/index'
+import { csrf } from '../src/index'
+import type { CSRFRequest } from '../src/index'
 
 const failing = suite('failing - these should return error')
 

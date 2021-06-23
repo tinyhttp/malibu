@@ -1,4 +1,4 @@
-import { randomBytes, createHash, pseudoRandomBytes, createHmac, timingSafeEqual } from 'crypto'
+import { randomBytes, createHash, createHmac, timingSafeEqual } from 'crypto'
 
 /**
  * Generate a secure type safe UID with specified length.
@@ -50,7 +50,7 @@ export function hash(str: string): string {
  * @returns {Boolean} Whether both keys matches or not
  */
 export function timeSafeCompare(a: string, b: string): boolean {
-  const key = pseudoRandomBytes(32)
+  const key = randomBytes(32)
   const aHMAC = createHmac('sha256', key).update(String(a)).digest()
   const bHMAC = createHmac('sha256', key).update(String(b)).digest()
 

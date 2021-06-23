@@ -1,12 +1,13 @@
 import cookieParser from 'cookie-parser'
-import e, { Request, Response } from 'express'
-import { csrf, CSRFRequest } from '../src'
+import e from 'express'
+import { csrf } from '../src'
+import type { Request, Response } from 'express'
+import type { CSRFRequest } from '../src'
 
 const app = e()
 
 app.use(cookieParser())
 app.use(e.json())
-app.use(e.urlencoded({ extended: true }))
 
 const csrfProtection = csrf()
 
