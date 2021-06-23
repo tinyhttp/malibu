@@ -1,6 +1,6 @@
 {
   "name": "tinyhttp-csrf",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "CSRF Middleware for Tinyhttp",
   "keywords": [
     "csrf",
@@ -36,7 +36,7 @@
     "lint": "eslint . --ext=js,mjs,ts,cjs",
     "format": "prettier --check \"./**/*.{ts,js,mjs,cjs}\"",
     "format:fix": "prettier --write \"./**/*.{ts,js,mjs,cjs}\"",
-    "postinstall": "husky install",
+    "dev:install": "pnpm install && husky install",
     "prerelease": "pnpm lint && pnpm build && pnpm test"
   },
   "repository": {
