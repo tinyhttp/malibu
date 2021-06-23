@@ -1,7 +1,7 @@
 {
   "name": "malibu",
   "version": "1.0.0",
-  "description": "Framework agnostic CSRF middleware",
+  "description": "Framework-agnostic CSRF middleware for Tinyhttp, Express, and more",
   "keywords": [
     "csrf",
     "middleware",
