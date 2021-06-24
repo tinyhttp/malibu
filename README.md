@@ -5,9 +5,10 @@
 <!-- badges goes here -->
 [![npm](https://img.shields.io/npm/v/malibu?style=for-the-badge&color=#31FFF3&label=&logo=npm)](https://npmjs.com/package/malibu) [![npm](https://img.shields.io/npm/dt/malibu?style=for-the-badge&color=#31FFF3)](https://npmjs.com/package/malibu) [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tinyhttp/malibu/CI?label=&logo=github&style=for-the-badge&color=#31FFF3)](https://github.com/tinyhttp/malibu/actions) [![Codecov](https://img.shields.io/codecov/c/gh/tinyhttp/malibu?style=for-the-badge&color=#31FFF3)](https://app.codecov.io/gh/tinyhttp/malibu)
 
+</div>  
+
 This middleware helps web developers fight [CSRF](https://en.wikipedia.org/wiki/Cross-site_request_forgery) attacks. Bear in mind, by solely using this middleware, we can't guarantee your app will be free from CSRF attacks. Refer to [CSRF Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) and [pillarjs/understanding-csrf](https://github.com/pillarjs/understanding-csrf) for more details.
 
-</div>  
   
 ## Install
 
