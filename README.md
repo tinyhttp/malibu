@@ -17,7 +17,7 @@ This middleware helps web developers fight [CSRF](https://en.wikipedia.org/wiki/
 pnpm i malibu
 ```
 
-# Usage
+## Usage
 
 Like all CSRF plugins, it depends on either Cookie Parser or Session middleware.
 
