@@ -3,7 +3,7 @@
 # Malibu
 
 <!-- badges goes here -->
-[![npm](https://img.shields.io/npm/v/malibu?style=for-the-badge&color=#31FFF3&label=&logo=npm)](https://npmjs.com/package/malibu) [![npm](https://img.shields.io/npm/dt/malibu?style=for-the-badge&color=#31FFF3)](https://npmjs.com/package/malibu) [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tinyhttp/malibu/CI?label=&logo=github&style=for-the-badge&color=#31FFF3)](https://github.com/tinyhttp/malibu/actions) [![Codecov](https://img.shields.io/codecov/c/gh/tinyhttp/malibu?style=for-the-badge&color=#31FFF3)](https://app.codecov.io/gh/tinyhttp/malibu)
+[![npm](https://img.shields.io/npm/v/malibu?style=for-the-badge&logo=npm&label=&color=#31FFF3)](https://npmjs.com/package/malibu) [![npm](https://img.shields.io/npm/dt/malibu?style=for-the-badge&color=#31FFF3)](https://npmjs.com/package/malibu) [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tinyhttp/malibu/CI?label=&logo=github&style=for-the-badge&color=#31FFF3)](https://github.com/tinyhttp/malibu/actions) [![Codecov](https://img.shields.io/codecov/c/gh/tinyhttp/malibu?style=for-the-badge&color=#31FFF3)](https://app.codecov.io/gh/tinyhttp/malibu)
 
 </div>  
 
