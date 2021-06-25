@@ -63,7 +63,7 @@ app.post('/', csrfProtection, (req, res) => {
 })
 ```
 
-For working with [express-session](https://github.com/expressjs/session):
+With [express-session](https://github.com/expressjs/session):
 
 ```js
 import { App } from '@tinyhttp/app'
