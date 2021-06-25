@@ -17,8 +17,10 @@ failing('without a cookie parser', async () => {
   const server = app.listen()
 
   const fetch = makeFetch(server)
+
   const response = await fetch('/')
   const body = await response.text()
+
   assert.is(response.status, 500)
   assert.is(body, 'misconfigured csrf')
 })

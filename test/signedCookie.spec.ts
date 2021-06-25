@@ -3,10 +3,11 @@ import * as assert from 'uvu/assert'
 import type { CSRFOptions } from '../src/index'
 import { initApp } from './helper'
 
-const signedOutput = suite('signed cookie - output')
+const output = suite('signed cookie - output')
 
-signedOutput('should output a csrf token', async () => {
+output('should output a csrf token', async () => {
   const { fetch } = initApp({ middleware: 'signedCookie' })
+
   const response = await fetch('/')
   const body = await response.json()
 
@@ -16,7 +17,7 @@ signedOutput('should output a csrf token', async () => {
   assert.type(body.token, 'string')
 })
 
-signedOutput('should output a csrf token with given options (different salt & secret length)', async () => {
+output('should output a csrf token with given options (different salt & secret length)', async () => {
   const options: CSRFOptions = {
     saltLength: 10,
     secretLength: 30,
@@ -25,6 +26,7 @@ signedOutput('should output a csrf token with given options (different salt & se
     }
   }
   const { fetch } = initApp({ middleware: 'signedCookie', options })
+
   const response = await fetch('/')
   const body = await response.json()
 
@@ -33,7 +35,7 @@ signedOutput('should output a csrf token with given options (different salt & se
   assert.is(salt.length, 10)
 })
 
-signedOutput('should output a csrf token with given options (different cookie path)', async () => {
+output('should output a csrf token with given options (different cookie path)', async () => {
   const options: CSRFOptions = {
     cookie: {
       signed: true,
@@ -42,6 +44,7 @@ signedOutput('should output a csrf token with given options (different cookie pa
     }
   }
   const { fetch } = initApp({ middleware: 'signedCookie', options })
+
   const response = await fetch('/')
   const body = await response.json()
 
@@ -54,11 +57,11 @@ signedOutput('should output a csrf token with given options (different cookie pa
   assert.type(body.token, 'string')
 })
 
-signedOutput.run()
+output.run()
 
-const signedBody = suite('signed cookie - req.body')
+const body = suite('signed cookie - req.body')
 
-signedBody('should be able to pass through req.body', async () => {
+body('should be able to pass through req.body', async () => {
   const { fetch } = initApp({ middleware: 'signedCookie', parser: 'json' })
   const request = await fetch('/')
   const requestBody = await request.json()
@@ -77,7 +80,7 @@ signedBody('should be able to pass through req.body', async () => {
   assert.is(body.message, 'hello')
 })
 
-signedBody('should not be able to pass through req.body', async () => {
+body('should not be able to pass through req.body', async () => {
   const { fetch } = initApp({ middleware: 'signedCookie', parser: 'json' })
   const request = await fetch('/')
 
@@ -95,11 +98,11 @@ signedBody('should not be able to pass through req.body', async () => {
   assert.is(body, 'invalid csrf token')
 })
 
-signedBody.run()
+body.run()
 
-const signedQuery = suite('signed cookie - req.query')
+const query = suite('signed cookie - req.query')
 
-signedQuery('should be able to pass through query', async () => {
+query('should be able to pass through query', async () => {
   const { fetch } = initApp({ middleware: 'signedCookie' })
   const request = await fetch('/')
   const requestBody = await request.json()
@@ -117,11 +120,11 @@ signedQuery('should be able to pass through query', async () => {
   assert.is(body.message, 'hello')
 })
 
-signedQuery.run()
+query.run()
 
-const signedHeader = suite('signed cookie - req.headers')
+const header = suite('signed cookie - req.headers')
 
-signedHeader('should be able to pass through headers csrf-token', async () => {
+header('should be able to pass through headers csrf-token', async () => {
   const { fetch } = initApp({ middleware: 'signedCookie' })
   const request = await fetch('/')
   const requestBody = await request.json()
@@ -133,14 +136,13 @@ signedHeader('should be able to pass through headers csrf-token', async () => {
       'csrf-token': requestBody.token
     }
   })
-
   const body = await response.json()
 
   assert.is(response.status, 200)
   assert.is(body.message, 'hello')
 })
 
-signedHeader('should be able to pass through headers xsrf-token', async () => {
+header('should be able to pass through headers xsrf-token', async () => {
   const { fetch } = initApp({ middleware: 'signedCookie' })
   const request = await fetch('/')
   const requestBody = await request.json()
@@ -152,14 +154,13 @@ signedHeader('should be able to pass through headers xsrf-token', async () => {
       'xsrf-token': requestBody.token
     }
   })
-
   const body = await response.json()
 
   assert.is(response.status, 200)
   assert.is(body.message, 'hello')
 })
 
-signedHeader('should be able to pass through headers x-csrf-token', async () => {
+header('should be able to pass through headers x-csrf-token', async () => {
   const { fetch } = initApp({ middleware: 'signedCookie' })
   const request = await fetch('/')
   const requestBody = await request.json()
@@ -171,14 +172,13 @@ signedHeader('should be able to pass through headers x-csrf-token', async () => 
       'x-csrf-token': requestBody.token
     }
   })
-
   const body = await response.json()
 
   assert.is(response.status, 200)
   assert.is(body.message, 'hello')
 })
 
-signedHeader('should be able to pass through headers x-xsrf-token', async () => {
+header('should be able to pass through headers x-xsrf-token', async () => {
   const { fetch } = initApp({ middleware: 'signedCookie' })
   const request = await fetch('/')
   const requestBody = await request.json()
@@ -190,14 +190,13 @@ signedHeader('should be able to pass through headers x-xsrf-token', async () => 
       'x-xsrf-token': requestBody.token
     }
   })
-
   const body = await response.json()
 
   assert.is(response.status, 200)
   assert.is(body.message, 'hello')
 })
 
-signedHeader.run()
+header.run()
 
 const reusable = suite('reusable token')
 
@@ -214,7 +213,6 @@ reusable('a', async () => {
       'x-xsrf-token': requestBody.token
     }
   })
-
   const body1 = await response1.json()
 
   // response #2
@@ -225,7 +223,6 @@ reusable('a', async () => {
       'x-xsrf-token': requestBody.token
     }
   })
-
   const body2 = await response2.json()
 
   assert.is(response1.status, 200)

@@ -11,6 +11,7 @@ const output = suite('session - output')
 
 output('should output a csrf token', async () => {
   const { fetch } = initApp({ middleware: 'session', options })
+
   const response = await fetch('/')
   const body = await response.json()
 
@@ -25,6 +26,7 @@ output('should output a csrf token with given options (different salt & secret l
     secretLength: 30
   }
   const { fetch } = initApp({ middleware: 'session', options: { ...options, ...saltySecret } })
+
   const response = await fetch('/')
   const body = await response.json()
 
@@ -39,6 +41,7 @@ const body = suite('session - req.body')
 
 body('should be able to pass through req.body', async () => {
   const { fetch } = initApp({ middleware: 'session', parser: 'json', options })
+
   const request = await fetch('/')
   const requestBody = await request.json()
 
@@ -58,6 +61,7 @@ body('should be able to pass through req.body', async () => {
 
 body('should not be able to pass through req.body', async () => {
   const { fetch } = initApp({ middleware: 'session', parser: 'json', options })
+
   const request = await fetch('/')
 
   const response = await fetch('/', {
@@ -81,6 +85,7 @@ const query = suite('session - req.query')
 
 query('should be able to pass through query', async () => {
   const { fetch } = initApp({ middleware: 'session', options })
+
   const request = await fetch('/')
   const requestBody = await request.json()
 
@@ -103,6 +108,7 @@ const header = suite('session - req.headers')
 
 header('should be able to pass through headers csrf-token', async () => {
   const { fetch } = initApp({ middleware: 'session', options })
+
   const request = await fetch('/')
   const requestBody = await request.json()
 
@@ -113,7 +119,6 @@ header('should be able to pass through headers csrf-token', async () => {
       'csrf-token': requestBody.token
     }
   })
-
   const body = await response.json()
 
   assert.is(response.status, 200)
@@ -122,6 +127,7 @@ header('should be able to pass through headers csrf-token', async () => {
 
 header('should be able to pass through headers xsrf-token', async () => {
   const { fetch } = initApp({ middleware: 'session', options })
+
   const request = await fetch('/')
   const requestBody = await request.json()
 
@@ -132,7 +138,6 @@ header('should be able to pass through headers xsrf-token', async () => {
       'xsrf-token': requestBody.token
     }
   })
-
   const body = await response.json()
 
   assert.is(response.status, 200)
@@ -141,6 +146,7 @@ header('should be able to pass through headers xsrf-token', async () => {
 
 header('should be able to pass through headers x-csrf-token', async () => {
   const { fetch } = initApp({ middleware: 'session', options })
+
   const request = await fetch('/')
   const requestBody = await request.json()
 
@@ -151,7 +157,6 @@ header('should be able to pass through headers x-csrf-token', async () => {
       'x-csrf-token': requestBody.token
     }
   })
-
   const body = await response.json()
 
   assert.is(response.status, 200)
@@ -160,6 +165,7 @@ header('should be able to pass through headers x-csrf-token', async () => {
 
 header('should be able to pass through headers x-xsrf-token', async () => {
   const { fetch } = initApp({ middleware: 'session', options })
+
   const request = await fetch('/')
   const requestBody = await request.json()
 
@@ -170,7 +176,6 @@ header('should be able to pass through headers x-xsrf-token', async () => {
       'x-xsrf-token': requestBody.token
     }
   })
-
   const body = await response.json()
 
   assert.is(response.status, 200)
@@ -183,6 +188,7 @@ const reusable = suite('reusable token')
 
 reusable('a', async () => {
   const { fetch } = initApp({ middleware: 'session', options })
+
   const request = await fetch('/')
   const requestBody = await request.json()
 
@@ -194,7 +200,6 @@ reusable('a', async () => {
       'x-xsrf-token': requestBody.token
     }
   })
-
   const body1 = await response1.json()
 
   // response #2
@@ -205,7 +210,6 @@ reusable('a', async () => {
       'x-xsrf-token': requestBody.token
     }
   })
-
   const body2 = await response2.json()
 
   assert.is(response1.status, 200)

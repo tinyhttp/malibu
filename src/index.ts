@@ -59,7 +59,7 @@ const defaultOptions: CSRFOptions = {
  * @returns {RouterHandler} CSRF Protection Middleware
  * @example
  * const csrfProtection = csrf()
- * app.use(cookieParser())
+ * app.use(cookieParser()) // or a session middleware, if you prefer
  *
  * app.get("/", csrfProtection, (req, res) => {
  *   res.status(200).json({ token: req.csrfToken() });
