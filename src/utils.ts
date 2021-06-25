@@ -34,7 +34,7 @@ export function randomBase62(length: number): string {
  * @returns {String} Hashed string
  */
 export function hash(str: string): string {
-  return createHash('sha1')
+  return createHash('sha256')
     .update(str, 'ascii')
     .digest('base64')
     .replace(/=+$/, '')
