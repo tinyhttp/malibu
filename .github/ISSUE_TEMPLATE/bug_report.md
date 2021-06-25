@@ -4,7 +4,6 @@ about: Create a report to help us improve
 title: ''
 labels: bug
 assignees: ''
-
 ---
 
 **Describe the bug**
@@ -25,9 +24,9 @@ A clear and concise description of what you expected to happen.
 
 **Versions**
 
-* `node`: 14
-* `@tinyhttp/app`: 0.X
-* `@tinyhttp/csrf`: 0.X
+- `node`: 14
+- `@tinyhttp/app`: 0.X
+- `@tinyhttp/csrf`: 0.X
 
 **Additional context**
 
