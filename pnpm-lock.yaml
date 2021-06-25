@@ -10,6 +10,7 @@ specifiers:
   '@tinyhttp/cookie-signature': 1.3.0
   '@types/cookie-parser': 1.4.2
   '@types/express': 4.17.12
+  '@types/express-session': ^1.17.3
   '@types/node': 15.12.4
   '@types/polka': ^0.5.2
   '@typescript-eslint/eslint-plugin': 4.28.0
@@ -21,6 +22,7 @@ specifiers:
   eslint-config-prettier: 8.3.0
   eslint-plugin-prettier: 3.4.0
   express: 4.17.1
+  express-session: ^1.17.2
   husky: 6.0.0
   milliparsec: 2.0.5
   polka: ^0.5.2
@@ -43,6 +45,7 @@ devDependencies:
   '@tinyhttp/cookie-parser': 1.3.11
   '@types/cookie-parser': 1.4.2
   '@types/express': 4.17.12
+  '@types/express-session': 1.17.3
   '@types/node': 15.12.4
   '@types/polka': 0.5.2
   '@typescript-eslint/eslint-plugin': 4.28.0_4ec1e0eca7c6e4115e1e7a13008fdec2
@@ -54,6 +57,7 @@ devDependencies:
   eslint-config-prettier: 8.3.0_eslint@7.29.0
   eslint-plugin-prettier: 3.4.0_de2986b0c29d2faa795004f5443c76d1
   express: 4.17.1
+  express-session: 1.17.2
   husky: 6.0.0
   milliparsec: 2.0.5
   polka: 0.5.2
@@ -461,6 +465,12 @@ packages:
       '@types/node': 15.12.4
       '@types/qs': 6.9.6
       '@types/range-parser': 1.2.3
+    dev: true
+
+  /@types/express-session/1.17.3:
+    resolution: {integrity: sha512-57DnyxiqClXOIjoCgeKCUYfKxBPOlOY/k+l1TPK+7bSwyiPTrS5FIk1Ycql7twk4wO7P5lfOVy6akDGiaMSLfw==}
+    dependencies:
+      '@types/express': 4.17.12
     dev: true
 
   /@types/express/4.17.12:
@@ -981,6 +991,11 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
+  /cookie/0.4.1:
+    resolution: {integrity: sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==}
+    engines: {node: '>= 0.6'}
+    dev: true
+
   /cookies/0.8.0:
     resolution: {integrity: sha512-8aPsApQfebXnuI+537McwYsDtjVxGm8gTIzQI3FDW6t5t/DAhERxtnbEPN/8RX+uZthoz4eCOgloXaE5cYyNow==}
     engines: {node: '>= 0.8'}
@@ -1081,7 +1096,6 @@ packages:
     resolution: {integrity: sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==}
     engines: {node: '>= 0.8'}
     dev: true
-    optional: true
 
   /dequal/2.0.2:
     resolution: {integrity: sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==}
@@ -1357,6 +1371,20 @@ packages:
   /etag/1.8.1:
     resolution: {integrity: sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=}
     engines: {node: '>= 0.6'}
+    dev: true
+
+  /express-session/1.17.2:
+    resolution: {integrity: sha512-mPcYcLA0lvh7D4Oqr5aNJFMtBMKPLl++OKKxkHzZ0U0oDq1rpKBnkR5f5vCHR26VeArlTOEF9td4x5IjICksRQ==}
+    engines: {node: '>= 0.8.0'}
+    dependencies:
+      cookie: 0.4.1
+      cookie-signature: 1.0.6
+      debug: 2.6.9
+      depd: 2.0.0
+      on-headers: 1.0.2
+      parseurl: 1.3.3
+      safe-buffer: 5.2.1
+      uid-safe: 2.1.5
     dev: true
 
   /express/4.17.1:
@@ -2152,6 +2180,11 @@ packages:
       ee-first: 1.1.1
     dev: true
 
+  /on-headers/1.0.2:
+    resolution: {integrity: sha512-pZAE+FJLoyITytdqK0U5s+FIpjN0JP3OzFi/u8Rx+EV5/W+JTWGXG8xFzevE7AjBfDqHv/8vL8qQsIhHnqRkrA==}
+    engines: {node: '>= 0.8'}
+    dev: true
+
   /once/1.4.0:
     resolution: {integrity: sha1-WDsap3WWHUsROsF9nFC6753Xa9E=}
     dependencies:
@@ -2323,6 +2356,11 @@ packages:
   /quick-lru/4.0.1:
     resolution: {integrity: sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==}
     engines: {node: '>=8'}
+    dev: true
+
+  /random-bytes/1.0.0:
+    resolution: {integrity: sha1-T2ih3Arli9P7lYSMMDJNt11kNgs=}
+    engines: {node: '>= 0.8'}
     dev: true
 
   /range-parser/1.2.1:
@@ -2781,6 +2819,13 @@ packages:
     resolution: {integrity: sha512-uauPG7XZn9F/mo+7MrsRjyvbxFpzemRjKEZXS4AK83oP2KKOJPvb+9cO/gmnv8arWZvhnjVOXz7B49m1l0e9Ew==}
     engines: {node: '>=4.2.0'}
     hasBin: true
+    dev: true
+
+  /uid-safe/2.1.5:
+    resolution: {integrity: sha512-KPHm4VL5dDXKz01UuEd88Df+KzynaohSL9fBh096KWAxSKZQDI2uBrVqtvRM4rwrIrRRKsdLNML/lnaaVSRioA==}
+    engines: {node: '>= 0.8'}
+    dependencies:
+      random-bytes: 1.0.0
     dev: true
 
   /universalify/2.0.0:

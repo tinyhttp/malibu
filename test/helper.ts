@@ -3,6 +3,7 @@ import { makeFetch } from 'supertest-fetch'
 import { App } from '@tinyhttp/app'
 import type { Request, Response } from '@tinyhttp/app'
 import { cookieParser } from '@tinyhttp/cookie-parser'
+import session from 'express-session'
 import { urlencoded, json } from 'milliparsec'
 import { csrf } from '../src/index'
 import { CSRFOptions, CSRFRequest } from '../src/index'
@@ -33,7 +34,8 @@ export function initApp({ parser, options = {}, middleware = 'cookie' }: initApp
   } else if (middleware === 'signedCookie') {
     app.use(cookieParser(secret))
   } else if (middleware === 'session') {
-    throw new Error('session is not available yet at this point of time')
+    // @ts-ignore
+    app.use(session({ secret, resave: false, saveUninitialized: false, name: 'session' }))
   }
 
   app.get('/', csrfProtection, (req, res) => {
