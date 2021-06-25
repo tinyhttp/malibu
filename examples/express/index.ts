@@ -1,8 +1,8 @@
 import cookieParser from 'cookie-parser'
 import e from 'express'
-import { csrf } from '../src'
+import { csrf } from '../../src/index'
 import type { Request, Response } from 'express'
-import type { CSRFRequest } from '../src'
+import type { CSRFRequest } from '../../src/index'
 
 const app = e()
 

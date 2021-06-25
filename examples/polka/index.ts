@@ -1,7 +1,7 @@
 import cookieParser from 'cookie-parser'
-import * as polka from 'polka'
+import polka from 'polka'
 import { json } from 'milliparsec'
-import { csrf } from '../src/index'
+import { csrf } from '../../src/index'
 
 const app = polka()
 
@@ -10,13 +10,17 @@ const csrfProtection = csrf()
 
 // @ts-ignore
 app.get('/', json(), csrfProtection, (req, res) => {
+  res.statusCode = 200
+  res.setHeader('content-type', 'application/json')
   // @ts-ignore
-  res.json({ token: req.csrfToken() })
+  res.end(JSON.stringify({ token: req.csrfToken() }))
 })
 
 // @ts-ignore
 app.post('/', json(), csrfProtection, (_, res) => {
-  res.json({ message: 'hello there' })
+  res.statusCode = 200
+  res.setHeader('content-type', 'application/json')
+  res.end(JSON.stringify({ message: 'hello there' }))
 })
 
 app.listen(5000, () => console.log('listening on http://localhost:5000'))

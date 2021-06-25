@@ -1,7 +1,7 @@
 import { App, Request, Response } from '@tinyhttp/app'
 import { cookieParser } from '@tinyhttp/cookie-parser'
 import { json } from 'milliparsec'
-import { csrf, CSRFRequest } from '../src'
+import { csrf, CSRFRequest } from '../../src/index'
 
 const app = new App<any, Request & CSRFRequest, Response>()
 

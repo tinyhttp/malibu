@@ -1,0 +1,22 @@
+{
+  "name": "malibu-tinyhttp",
+  "version": "0.0.0",
+  "description": "Malibu + Express",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --experimental-loader esbuild-node-loader index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tinyhttp/malibu/tree/master/examples/express"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.12"
+  }
+}
