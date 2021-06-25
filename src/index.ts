@@ -16,11 +16,14 @@ export interface CSRFRequest extends IncomingMessage {
 // HTTP Method according to MDN (https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
 type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD' | 'TRACE'
 
+type MiddlewareOptions = 'session' | 'cookie'
+
 /**
  * Options for CSRF constructor.
  * Refer to README for more information.
  */
 export interface CSRFOptions {
+  middleware?: MiddlewareOptions
   cookie?: CookieOptions
   sessionKey?: string
   value?: (req: CSRFRequest | IncomingMessage) => any
@@ -40,6 +43,7 @@ export type CookieOptions = SerializeOptions & {
 }
 
 const defaultOptions: CSRFOptions = {
+  middleware: 'cookie',
   cookie: { signed: false, key: '_csrf', path: '/' },
   sessionKey: 'session',
   ignoreMethod: ['GET', 'HEAD', 'OPTIONS'],
@@ -73,15 +77,15 @@ export function csrf(opts: CSRFOptions = {}) {
   })
 
   return (req: CSRFRequest, res: ServerResponse, next: () => void) => {
-    if (!verifyConfiguration(req, options.sessionKey, options.cookie)) {
+    if (!verifyConfiguration(req, options.sessionKey, options.cookie, options.middleware)) {
       throw new Error('misconfigured csrf')
     }
 
-    let secret = getSecret(req, options.sessionKey, options.cookie)
+    let secret = getSecret(req, options.sessionKey, options.cookie, options.middleware)
     let token: string
 
     req.csrfToken = (): string => {
-      let newSecret = !options.cookie ? getSecret(req, options.sessionKey, options.cookie) : secret
+      let newSecret = !options.cookie ? getSecret(req, options.sessionKey, options.cookie, options.middleware) : secret
 
       if (token && newSecret === secret) {
         return token
@@ -89,7 +93,7 @@ export function csrf(opts: CSRFOptions = {}) {
 
       if (newSecret === undefined) {
         newSecret = tokens.secret()
-        setSecret(req, res, options.sessionKey, newSecret, options.cookie)
+        setSecret(req, res, options.sessionKey, newSecret, options.cookie, options.middleware)
       }
 
       token = tokens.create(newSecret)
@@ -98,7 +102,7 @@ export function csrf(opts: CSRFOptions = {}) {
 
     if (!secret) {
       secret = tokens.secret()
-      setSecret(req, res, options.sessionKey, secret, options.cookie)
+      setSecret(req, res, options.sessionKey, secret, options.cookie, options.middleware)
     }
 
     if (!options.ignoreMethod.includes(req.method as HTTPMethod) && !tokens.verify(secret, options.value(req))) {
@@ -122,8 +126,12 @@ function defaultValue(req: CSRFRequest): string | string[] {
   )
 }
 
-function verifyConfiguration(req: CSRFRequest, sessionKey: string, cookie: CookieOptions): boolean {
-  if (!getSecretBag(req, sessionKey, cookie)) {
+function verifyConfiguration(req: CSRFRequest, sessionKey: string, cookie: CookieOptions, middleware: MiddlewareOptions): boolean {
+  if (!getSecretBag(req, sessionKey, cookie, middleware)) {
+    return false
+  }
+
+  if (middleware !== 'session' && middleware !== 'cookie') {
     return false
   }
 
@@ -134,17 +142,19 @@ function verifyConfiguration(req: CSRFRequest, sessionKey: string, cookie: Cooki
   return true
 }
 
-function getSecret(req: CSRFRequest, sessionKey: string, cookie: CookieOptions): string {
-  const bag = getSecretBag(req, sessionKey, cookie)
+function getSecret(req: CSRFRequest, sessionKey: string, cookie: CookieOptions, middleware: MiddlewareOptions): string {
+  const bag = getSecretBag(req, sessionKey, cookie, middleware)
+  const key = (middleware === 'cookie') ? cookie.key : 'csrfSecret'
+
   if (!bag) {
     throw new Error('misconfigured csrf')
   }
 
-  return bag[cookie.key]
+  return bag[key]
 }
 
-function getSecretBag(req: CSRFRequest, sessionKey: string, cookie: CookieOptions): string {
-  if (cookie) {
+function getSecretBag(req: CSRFRequest, sessionKey: string, cookie: CookieOptions, middleware: MiddlewareOptions): string {
+  if (middleware === 'cookie' && cookie) {
     return cookie.signed ? req?.signedCookies : req?.cookies
   }
   return req[sessionKey]
@@ -155,9 +165,10 @@ function setSecret(
   res: ServerResponse,
   sessionKey: string,
   secret: string,
-  cookie: CookieOptions
+  cookie: CookieOptions,
+  middleware: MiddlewareOptions
 ): void {
-  if (cookie) {
+  if (middleware === 'cookie' && cookie) {
     const value = cookie.signed ? `s:${sign(secret, req.secret as string)}` : secret
     setCookie(res, cookie.key, value, cookie)
     return
