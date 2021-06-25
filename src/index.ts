@@ -126,7 +126,12 @@ function defaultValue(req: CSRFRequest): string | string[] {
   )
 }
 
-function verifyConfiguration(req: CSRFRequest, sessionKey: string, cookie: CookieOptions, middleware: MiddlewareOptions): boolean {
+function verifyConfiguration(
+  req: CSRFRequest,
+  sessionKey: string,
+  cookie: CookieOptions,
+  middleware: MiddlewareOptions
+): boolean {
   if (!getSecretBag(req, sessionKey, cookie, middleware)) {
     return false
   }
@@ -144,7 +149,7 @@ function verifyConfiguration(req: CSRFRequest, sessionKey: string, cookie: Cooki
 
 function getSecret(req: CSRFRequest, sessionKey: string, cookie: CookieOptions, middleware: MiddlewareOptions): string {
   const bag = getSecretBag(req, sessionKey, cookie, middleware)
-  const key = (middleware === 'cookie') ? cookie.key : 'csrfSecret'
+  const key = middleware === 'cookie' ? cookie.key : 'csrfSecret'
 
   if (!bag) {
     throw new Error('misconfigured csrf')
@@ -153,7 +158,12 @@ function getSecret(req: CSRFRequest, sessionKey: string, cookie: CookieOptions, 
   return bag[key]
 }
 
-function getSecretBag(req: CSRFRequest, sessionKey: string, cookie: CookieOptions, middleware: MiddlewareOptions): string {
+function getSecretBag(
+  req: CSRFRequest,
+  sessionKey: string,
+  cookie: CookieOptions,
+  middleware: MiddlewareOptions
+): string {
   if (middleware === 'cookie' && cookie) {
     return cookie.signed ? req?.signedCookies : req?.cookies
   }
