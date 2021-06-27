@@ -4,9 +4,7 @@
     "compilerOptions": {
       "module": "commonjs"
     },
-    "include": [
-      "test/**/*"
-    ]
+    "include": ["test/**/*"]
   },
   "compilerOptions": {
     "rootDir": "src",
@@ -28,5 +26,5 @@
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true
   },
-  "exclude": ["test", "examples", "dist"]
+  "exclude": ["tests", "examples", "dist"]
 }
