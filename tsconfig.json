@@ -1,11 +1,4 @@
 {
-  "ts-node": {
-    "transpileOnly": true,
-    "compilerOptions": {
-      "module": "commonjs"
-    },
-    "include": ["test/**/*"]
-  },
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",
