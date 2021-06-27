@@ -1,6 +1,6 @@
 {
   "name": "malibu",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Framework-agnostic CSRF middleware",
   "keywords": [
     "csrf",
