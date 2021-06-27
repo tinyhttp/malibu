@@ -10,17 +10,8 @@
   "author": "Reinaldy Rafli <aldy505@tutanota.com>",
   "license": "MIT",
   "type": "module",
-  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "module": "./dist/index.js",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
-    },
-    "./package.json": "./package.json",
-    "./": "./"
-  },
+  "exports": "./dist/index.js",
   "files": [
     "dist/index.js",
     "dist/index.d.ts",
@@ -30,15 +21,13 @@
     "LICENSE"
   ],
   "scripts": {
-    "coverage": "c8 --reporter=lcov --reporter=text pnpm test",
-    "test": "node --experimental-loader esbuild-node-loader node_modules/uvu/bin.js test",
-    "pretest": "pnpm format:fix",
-    "build": "rollup -c rollup.config.js",
-    "lint": "eslint . --ext=js,mjs,ts,cjs",
-    "format": "prettier --check \"./**/*.{ts,js,mjs,cjs,md}\"",
-    "format:fix": "prettier --write \"./**/*.{ts,js,mjs,cjs,md}\"",
-    "dev:install": "pnpm install && husky install",
-    "prerelease": "pnpm lint && pnpm build && pnpm test"
+    "build": "rollup -c",
+    "test": "node --experimental-loader esbuild-node-loader node_modules/uvu/bin.js tests",
+    "test:coverage": "c8 --include=src pnpm test",
+    "test:report": "c8 report --reporter=text-lcov > coverage.lcov",
+    "lint": "eslint \"./**/*.ts\"",
+    "format": "prettier --write \"./**/*.ts\"",
+    "prepare": "npm run test && npm run lint && npm run build"
   },
   "repository": {
     "type": "git",
@@ -66,7 +55,7 @@
     "@types/node": "15.12.4",
     "@typescript-eslint/eslint-plugin": "4.28.0",
     "@typescript-eslint/parser": "4.28.0",
-    "c8": "7.7.3",
+    "c8": "7.7.2",
     "cookie-parser": "1.4.5",
     "esbuild-node-loader": "0.1.1",
     "eslint": "7.29.0",
