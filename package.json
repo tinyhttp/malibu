@@ -13,12 +13,7 @@
   "types": "./dist/index.d.ts",
   "exports": "./dist/index.js",
   "files": [
-    "dist/index.js",
-    "dist/index.d.ts",
-    "dist/token.d.ts",
-    "dist/utils.d.ts",
-    "README.md",
-    "LICENSE"
+    "dist"
   ],
   "scripts": {
     "build": "rollup -c",
