@@ -57,24 +57,6 @@ Here's a small list of requirements for your PR:
 - PR must have a clear description of what it does, which part of the repo it affects
 - if PR is adding a new middleware, it should have an example in the description.
 
-### Adding new example
-
-- Create a folder with the package name in `examples` folder
-- Create `package.json` with these fields:
-
-```json
-{
-  "name": "<name>",
-  "type": "module",
-  "module": "index.js"
-}
-```
-
-- create `index.js` (or `index.ts`) file
-- create some cool example
-- create `README.md` with example title and setup instructions (copy from any near folder and replace needed fields)
-- Pull request!
-
 In most other cases, additional steps aren't required. Install, write, test, lint and your code is ready to be submitted!
 
 If everything from the list is done right, feel free to submit a PR! I will look into it asap.

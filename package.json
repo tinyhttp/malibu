@@ -34,8 +34,7 @@
   "homepage": "https://github.com/tinyhttp/malibu#readme",
   "directories": {
     "test": "./test",
-    "lib": "./src",
-    "example": "./examples"
+    "lib": "./src"
   },
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
