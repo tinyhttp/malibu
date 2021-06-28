@@ -22,7 +22,7 @@
     "test:report": "c8 report --reporter=text-lcov > coverage.lcov",
     "lint": "eslint \"./**/*.ts\"",
     "format": "prettier --write \"./**/*.ts\"",
-    "prepare": "npm run test && npm run lint && npm run build"
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
