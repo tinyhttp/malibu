@@ -85,7 +85,9 @@ export function csrf(opts: CSRFOptions = {}) {
     let token: string
 
     req.csrfToken = (): string => {
-      const newSecret = !options.cookie ? getSecret(req, options.sessionKey, options.cookie, options.middleware) : secret
+      const newSecret = !options.cookie
+        ? getSecret(req, options.sessionKey, options.cookie, options.middleware)
+        : secret
 
       token = tokens.create(newSecret)
       return token
