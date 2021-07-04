@@ -85,16 +85,7 @@ export function csrf(opts: CSRFOptions = {}) {
     let token: string
 
     req.csrfToken = (): string => {
-      let newSecret = !options.cookie ? getSecret(req, options.sessionKey, options.cookie, options.middleware) : secret
-
-      if (token && newSecret === secret) {
-        return token
-      }
-
-      if (newSecret === undefined) {
-        newSecret = tokens.secret()
-        setSecret(req, res, options.sessionKey, newSecret, options.cookie, options.middleware)
-      }
+      const newSecret = !options.cookie ? getSecret(req, options.sessionKey, options.cookie, options.middleware) : secret
 
       token = tokens.create(newSecret)
       return token
@@ -133,10 +124,6 @@ function verifyConfiguration(
   middleware: MiddlewareOptions
 ): boolean {
   if (!getSecretBag(req, sessionKey, cookie, middleware)) {
-    return false
-  }
-
-  if (middleware !== 'session' && middleware !== 'cookie') {
     return false
   }
 
