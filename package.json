@@ -5,7 +5,12 @@
   "keywords": [
     "csrf",
     "middleware",
-    "framework agnostic"
+    "tokens",
+    "framework agnostic",
+    "express",
+    "tinyhttp",
+    "polka",
+    "http"
   ],
   "author": "Reinaldy Rafli <aldy505@tutanota.com>",
   "license": "MIT",
