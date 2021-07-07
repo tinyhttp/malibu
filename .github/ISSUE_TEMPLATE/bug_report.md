@@ -25,8 +25,8 @@ A clear and concise description of what you expected to happen.
 **Versions**
 
 - `node`: 14
+- `malibu`: 0.X
 - `@tinyhttp/app`: 0.X
-- `@tinyhttp/csrf`: 0.X
 
 **Additional context**
 
