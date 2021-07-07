@@ -3,7 +3,7 @@
 <img align="center" width="600px" src="https://raw.githubusercontent.com/tinyhttp/malibu/master/logo.svg" alt="Malibu" />
 <br /><br />
 
-[![npm](https://img.shields.io/npm/v/malibu?style=for-the-badge&logo=npm&label=&color=26B0A0)](https://npmjs.com/package/malibu) [![npm](https://img.shields.io/npm/dt/malibu?style=for-the-badge&color=26B0A0)](https://npmjs.com/package/malibu) [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tinyhttp/malibu/CI?label=&logo=github&style=for-the-badge&color=26B0A0)](https://github.com/tinyhttp/malibu/actions) [![Coveralls](https://img.shields.io/coveralls/github/tinyhttp/malibu?style=for-the-badge&color=26B0A0)](https://coveralls.io/github/tinyhttp/malibu) [![Code Quality](https://img.shields.io/codefactor/grade/github/tinyhttp/malibu?style=for-the-badge&color=26B0A0)](https://www.codefactor.io/repository/github/aldy505/malibu)
+[![npm](https://img.shields.io/npm/v/malibu?style=for-the-badge&logo=npm&label=&color=26B0A0)](https://npmjs.com/package/malibu) [![npm](https://img.shields.io/npm/dt/malibu?style=for-the-badge&color=26B0A0)](https://npmjs.com/package/malibu) [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tinyhttp/malibu/CI?label=&logo=github&style=for-the-badge&color=26B0A0)](https://github.com/tinyhttp/malibu/actions) [![Coveralls](https://img.shields.io/coveralls/github/tinyhttp/malibu?style=for-the-badge&color=26B0A0)](https://coveralls.io/github/tinyhttp/malibu) [![Code Quality](https://img.shields.io/codefactor/grade/github/tinyhttp/malibu?style=for-the-badge&color=26B0A0)](https://www.codefactor.io/repository/github/tinyhttp/malibu)
 
 </div>
 
