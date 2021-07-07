@@ -56,7 +56,7 @@ const defaultOptions: CSRFOptions = {
  * Initiate CSRF (Cross-Site Request Forgery) Protection middleware.
  * @function csrf
  * @param {CSRFOptions} opts Given configuration options
- * @returns {RouterHandler} CSRF Protection Middleware
+ * @returns {(req: CSRFRequest, res: ServerResponse, next: () => void) => void} CSRF Protection Middleware
  * @example
  * const csrfProtection = csrf()
  * app.use(cookieParser()) // or a session middleware, if you prefer
@@ -65,7 +65,7 @@ const defaultOptions: CSRFOptions = {
  *   res.status(200).json({ token: req.csrfToken() });
  * });
  */
-export function csrf(opts: CSRFOptions = {}) {
+export function csrf(opts: CSRFOptions = {}): (req: CSRFRequest, res: ServerResponse, next: () => void) => void {
   const options = Object.assign({}, defaultOptions, opts)
 
   if (!options.cookie?.key) options.cookie.key = '_csrf'
@@ -85,9 +85,10 @@ export function csrf(opts: CSRFOptions = {}) {
     let token: string
 
     req.csrfToken = (): string => {
-      const newSecret = !options.cookie
-        ? getSecret(req, options.sessionKey, options.cookie, options.middleware)
-        : secret
+      const newSecret =
+        options.middleware === 'session'
+          ? getSecret(req, options.sessionKey, options.cookie, options.middleware)
+          : secret
 
       token = tokens.create(newSecret)
       return token
@@ -139,10 +140,6 @@ function verifyConfiguration(
 function getSecret(req: CSRFRequest, sessionKey: string, cookie: CookieOptions, middleware: MiddlewareOptions): string {
   const bag = getSecretBag(req, sessionKey, cookie, middleware)
   const key = middleware === 'cookie' ? cookie.key : 'csrfSecret'
-
-  if (!bag) {
-    throw new Error('misconfigured csrf')
-  }
 
   return bag[key]
 }
