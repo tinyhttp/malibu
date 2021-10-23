@@ -70,7 +70,7 @@
     "uvu": "0.5.1"
   },
   "dependencies": {
-    "@tinyhttp/cookie": "2.0.1",
-    "@tinyhttp/cookie-signature": "2.0.1"
+    "@tinyhttp/cookie": "^2.0.1",
+    "@tinyhttp/cookie-signature": "^2.0.1"
   }
 }
