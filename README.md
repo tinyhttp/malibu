@@ -7,10 +7,6 @@
 
 </div>
 
-> I'm building [Flash](https://flash-dev.vercel.app) - a service to deploy websites and apps on the new decentralized stack.
->
-> If you'd like to try or collab, [dm](https://t.me/v_1rtl) or [email](mailto:yo@v1rtl.site)
-
 This middleware helps web developers fight [CSRF](https://en.wikipedia.org/wiki/Cross-site_request_forgery) attacks. Bear in mind, by solely using this middleware, we can't guarantee your app will be free from CSRF attacks. Refer to [CSRF Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) and [pillarjs/understanding-csrf](https://github.com/pillarjs/understanding-csrf) for more details.
 
 * ⚡ Framework agnostic (works with Express, Tinyhttp, Polka, and more!)
