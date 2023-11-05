@@ -48,7 +48,7 @@
     "@commitlint/cli": "17.7.2",
     "@commitlint/config-conventional": "17.7.0",
     "@rollup/plugin-typescript": "11.1.4",
-    "@tinyhttp/app": "2.2.0",
+    "@tinyhttp/app": "2.0.32",
     "@tinyhttp/cookie-parser": "2.0.6",
     "@types/express-session": "1.17.8",
     "@types/node": "20.8.0",
