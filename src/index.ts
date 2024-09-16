@@ -10,7 +10,7 @@ export interface CSRFRequest extends IncomingMessage {
   signedCookies?: unknown
   cookies?: unknown
   query?: ParsedUrlQuery
-  body?: any
+  body?: unknown
 }
 
 // HTTP Method according to MDN (https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
@@ -26,7 +26,7 @@ export interface CSRFOptions {
   middleware?: MiddlewareOptions
   cookie?: CookieOptions
   sessionKey?: string
-  value?: (req: CSRFRequest | IncomingMessage) => any
+  value?: (req: CSRFRequest | IncomingMessage) => string | string[]
   ignoreMethod?: HTTPMethod[]
   saltLength?: number
   secretLength?: number
@@ -111,7 +111,7 @@ export function csrf(opts: CSRFOptions = {}): (req: CSRFRequest, res: ServerResp
 
 function defaultValue(req: CSRFRequest): string | string[] {
   return (
-    req.body?._csrf ||
+    (assertRecord(req?.body) && req.body?._csrf) ||
     req.query?._csrf ||
     req.headers['csrf-token'] ||
     req.headers['xsrf-token'] ||

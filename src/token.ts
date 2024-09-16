@@ -28,13 +28,14 @@ export class Tokens {
     return typeSafeUID(this.secretLength)
   }
 
-  verify(secret: string, token: string): boolean {
+  verify(secret: string, token: string | string[]): boolean {
+    if (Array.isArray(token)) token = token.join('')
     const index = token?.indexOf('-')
     if (index === -1 || index === undefined) {
       return false
     }
 
-    const salt = token.substr(0, index)
+    const salt = token.slice(0, index)
     const expected = this.tokenize(secret, salt)
 
     return timeSafeCompare(token, expected)
