@@ -41,7 +41,7 @@ pnpm i
 
 ### Formatting
 
-If you use VS Code, please install Prettier and ESLint plugins for proper linting and code formatting.
+If you use VS Code, please install Biome plugin for proper linting and code formatting.
 
 If you use a text editor that doesn't have Prettier integration, you can run `pnpx format:fix"`
 

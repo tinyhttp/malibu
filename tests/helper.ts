@@ -1,12 +1,12 @@
-import { randomBytes } from 'crypto'
-import { makeFetch } from 'supertest-fetch'
+import { randomBytes } from 'node:crypto'
 import { App } from '@tinyhttp/app'
 import type { Request, Response } from '@tinyhttp/app'
 import { cookieParser } from '@tinyhttp/cookie-parser'
 import session from 'express-session'
-import { urlencoded, json } from 'milliparsec'
+import { json, urlencoded } from 'milliparsec'
+import { makeFetch } from 'supertest-fetch'
 import { csrf } from '../src/index'
-import { CSRFOptions, CSRFRequest } from '../src/index'
+import type { CSRFOptions, CSRFRequest } from '../src/index'
 
 type ParserOptions = 'urlencoded' | 'json' | ''
 type MiddlewareOptions = 'cookie' | 'signedCookie' | 'session'
@@ -20,7 +20,7 @@ interface initAppOptions {
 const secret = randomBytes(32).toString('base64')
 
 export function initApp({ parser, options = {}, middleware = 'cookie' }: initAppOptions) {
-  const app = new App<any, Request & CSRFRequest, Response>()
+  const app = new App<Request & CSRFRequest, Response>()
   const csrfProtection = csrf(parseOptions(options, middleware))
 
   if (parser === 'urlencoded') {

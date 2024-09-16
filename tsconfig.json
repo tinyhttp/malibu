@@ -19,5 +19,5 @@
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true
   },
-  "exclude": ["tests", "examples", "dist"]
+  "exclude": ["tests", "examples", "dist", "vitest.config.ts"]
 }

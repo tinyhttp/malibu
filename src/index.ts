@@ -1,6 +1,6 @@
-import { IncomingMessage, ServerResponse } from 'http'
-import { ParsedUrlQuery } from 'querystring'
-import { serialize, SerializeOptions } from '@tinyhttp/cookie'
+import type { IncomingMessage, ServerResponse } from 'node:http'
+import type { ParsedUrlQuery } from 'node:querystring'
+import { type SerializeOptions, serialize } from '@tinyhttp/cookie'
 import { sign } from '@tinyhttp/cookie-signature'
 import { Tokens } from './token'
 

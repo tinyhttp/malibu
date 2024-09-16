@@ -41,6 +41,6 @@ export class Tokens {
   }
 
   tokenize(secret: string, salt: string): string {
-    return salt + '-' + hash(salt + '-' + secret)
+    return `${salt}-${hash(`${salt}-${secret}`)}`
   }
 }
