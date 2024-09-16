@@ -7,8 +7,8 @@ import { Tokens } from './token'
 export interface CSRFRequest extends IncomingMessage {
   csrfToken(): string
   secret?: string | string[]
-  signedCookies?: any
-  cookies?: any
+  signedCookies?: unknown
+  cookies?: unknown
   query?: ParsedUrlQuery
   body?: any
 }
@@ -81,7 +81,7 @@ export function csrf(opts: CSRFOptions = {}): (req: CSRFRequest, res: ServerResp
       throw new Error('misconfigured csrf')
     }
 
-    let secret = getSecret(req, options.sessionKey, options.cookie, options.middleware)
+    let secret: string | undefined = getSecret(req, options.sessionKey, options.cookie, options.middleware)
     let token: string
 
     req.csrfToken = (): string => {
@@ -137,11 +137,26 @@ function verifyConfiguration(
   return true
 }
 
-function getSecret(req: CSRFRequest, sessionKey: string, cookie: CookieOptions, middleware: MiddlewareOptions): string {
-  const bag = getSecretBag(req, sessionKey, cookie, middleware)
+function getSecret(
+  req: CSRFRequest,
+  sessionKey: string,
+  cookie: CookieOptions,
+  middleware: MiddlewareOptions
+): string | undefined {
+  const bag: Record<string, string> | undefined = getSecretBag(req, sessionKey, cookie, middleware)
   const key = middleware === 'cookie' ? cookie.key : 'csrfSecret'
 
-  return bag[key]
+  return bag ? bag[key] : undefined
+}
+
+function assertRecord(obj: unknown): obj is Record<string, string> {
+  if (typeof obj !== 'object') return false
+
+  if (Array.isArray(obj)) return false
+
+  if (Object.getOwnPropertySymbols(obj).length > 0) return false
+
+  return Object.getOwnPropertyNames(obj).every((prop) => typeof obj[prop] === 'string')
 }
 
 function getSecretBag(
@@ -149,9 +164,19 @@ function getSecretBag(
   sessionKey: string,
   cookie: CookieOptions,
   middleware: MiddlewareOptions
-): string {
+): Record<string, string> | undefined {
   if (middleware === 'cookie' && cookie) {
-    return cookie.signed ? req?.signedCookies : req?.cookies
+    if (cookie.signed) {
+      if (assertRecord(req?.signedCookies)) {
+        return req?.signedCookies
+      }
+      return undefined
+    }
+
+    if (assertRecord(req?.cookies)) {
+      return req?.cookies
+    }
+    return undefined
   }
   return req[sessionKey]
 }

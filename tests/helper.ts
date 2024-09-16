@@ -34,7 +34,7 @@ export function initApp({ parser, options = {}, middleware = 'cookie' }: initApp
   } else if (middleware === 'signedCookie') {
     app.use(cookieParser(secret))
   } else if (middleware === 'session') {
-    // @ts-ignore
+    // @ts-expect-error testing purposes
     app.use(session({ secret, resave: false, saveUninitialized: false, name: 'session' }))
   }
 

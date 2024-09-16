@@ -5,7 +5,7 @@ export default defineConfig({
     environment: 'node',
     coverage: {
       provider: 'v8',
-      reporter: ['lcov'],
+      reporter: ['lcov', 'text', 'json'],
       include: ['src']
     }
   }

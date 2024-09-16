@@ -9,7 +9,7 @@ import type { CSRFRequest } from '../src/index'
 
 describe('failing - these should return error', () => {
   it('without a cookie parser', async () => {
-    const app = new App<Request & CSRFRequest, any>()
+    const app = new App<Request & CSRFRequest, never>()
     const csrfProtection = csrf({ cookie: { signed: false } })
     app.use('/', urlencoded(), csrfProtection, (req, res) => {
       res.status(200).json({ token: req.csrfToken() })
@@ -29,7 +29,7 @@ describe('failing - these should return error', () => {
   })
 
   it('signed but without a secret', async () => {
-    const app = new App<Request & CSRFRequest, any>()
+    const app = new App<Request & CSRFRequest, never>()
     app.use(cookieParser())
     const csrfProtection = csrf({ cookie: { signed: true } })
     app.use('/', urlencoded(), csrfProtection, (req, res) => {
@@ -49,8 +49,28 @@ describe('failing - these should return error', () => {
     assert.equal(body, 'misconfigured csrf')
   })
 
+  it('signed cookie without cookie parser', async () => {
+    const app = new App<Request & CSRFRequest, never>()
+    const csrfProtection = csrf({ cookie: { signed: true } })
+    app.use('/', urlencoded(), csrfProtection, (req, res) => {
+      res.status(200).json({ token: req.csrfToken() })
+    })
+    const server = app.listen()
+    onTestFinished(() => {
+      server.close()
+    })
+
+    const fetch = makeFetch(server)
+
+    const response = await fetch('/')
+    const body = await response.text()
+
+    assert.equal(response.status, 500)
+    assert.equal(body, 'misconfigured csrf')
+  })
+
   it('session without the session middleware', async () => {
-    const app = new App<Request & CSRFRequest, any>()
+    const app = new App<Request & CSRFRequest, never>()
     const csrfProtection = csrf({ middleware: 'session' })
     app.use('/', urlencoded(), csrfProtection, (req, res) => {
       res.status(200).json({ token: req.csrfToken() })
