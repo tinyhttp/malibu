@@ -7,10 +7,10 @@ import { Tokens } from './token'
 export interface CSRFRequest extends IncomingMessage {
   csrfToken(): string
   secret?: string | string[]
-  signedCookies?: unknown
-  cookies?: unknown
+  signedCookies?: Record<string, string>
+  cookies?: Record<string, string>
   query?: ParsedUrlQuery
-  body?: unknown
+  body?: Record<string, never>
 }
 
 // HTTP Method according to MDN (https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
@@ -111,7 +111,7 @@ export function csrf(opts: CSRFOptions = {}): (req: CSRFRequest, res: ServerResp
 
 function defaultValue(req: CSRFRequest): string | string[] {
   return (
-    (assertRecord(req?.body) && req.body?._csrf) ||
+    (req?.body?._csrf as string) ||
     req.query?._csrf ||
     req.headers['csrf-token'] ||
     req.headers['xsrf-token'] ||
@@ -149,16 +149,6 @@ function getSecret(
   return bag ? bag[key] : undefined
 }
 
-function assertRecord(obj: unknown): obj is Record<string, string> {
-  if (typeof obj !== 'object') return false
-
-  if (Array.isArray(obj)) return false
-
-  if (Object.getOwnPropertySymbols(obj).length > 0) return false
-
-  return Object.getOwnPropertyNames(obj).every((prop) => typeof obj[prop] === 'string')
-}
-
 function getSecretBag(
   req: CSRFRequest,
   sessionKey: string,
@@ -167,16 +157,10 @@ function getSecretBag(
 ): Record<string, string> | undefined {
   if (middleware === 'cookie' && cookie) {
     if (cookie.signed) {
-      if (assertRecord(req?.signedCookies)) {
-        return req?.signedCookies
-      }
-      return undefined
+      return req?.signedCookies
     }
 
-    if (assertRecord(req?.cookies)) {
-      return req?.cookies
-    }
-    return undefined
+    return req?.cookies
   }
   return req[sessionKey]
 }
