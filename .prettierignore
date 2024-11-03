@@ -1,7 +1,0 @@
-node_modules
-dist
-coverage
-examples/dev-server/public/sosseDevSocketClient/main.umd.js
-.next
-packages/*/dist
-examples/aws/.build

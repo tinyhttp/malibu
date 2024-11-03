@@ -2,32 +2,21 @@
   "name": "malibu",
   "version": "1.0.6",
   "description": "Framework-agnostic CSRF middleware",
-  "keywords": [
-    "csrf",
-    "middleware",
-    "tokens",
-    "framework agnostic",
-    "express",
-    "tinyhttp",
-    "polka",
-    "http"
-  ],
+  "keywords": ["csrf", "middleware", "tokens", "framework agnostic", "express", "tinyhttp", "polka", "http"],
   "author": "Reinaldy Rafli <aldy505@proton.me>",
   "license": "MIT",
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": "./dist/index.js",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
-    "build": "rollup -c",
-    "test": "uvu -r tsm tests",
-    "test:coverage": "c8 --include=src pnpm test",
-    "test:report": "c8 report --reporter=text-lcov > coverage.lcov",
-    "lint": "eslint \"./**/*.ts\"",
-    "format": "prettier --write \"./**/*.ts\"",
-    "prepare": "husky install"
+    "build": "tsc",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint": "biome lint .",
+    "format": "biome format .",
+    "check": "biome check .",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -45,32 +34,23 @@
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.7.2",
-    "@commitlint/config-conventional": "17.7.0",
-    "@rollup/plugin-typescript": "11.1.4",
-    "@tinyhttp/app": "2.0.32",
+    "@biomejs/biome": "1.9.1",
+    "@commitlint/cli": "19.5.0",
+    "@commitlint/config-conventional": "19.5.0",
+    "@tinyhttp/app": "2.4.0",
     "@tinyhttp/cookie-parser": "2.0.6",
-    "@types/express-session": "1.17.8",
-    "@types/node": "20.8.0",
-    "@typescript-eslint/eslint-plugin": "6.7.3",
-    "@typescript-eslint/parser": "6.7.3",
-    "c8": "8.0.1",
-    "eslint": "8.50.0",
-    "eslint-config-prettier": "9.0.0",
-    "eslint-plugin-prettier": "5.0.0",
-    "express-session": "1.17.3",
-    "husky": "8.0.3",
-    "milliparsec": "2.3.0",
-    "prettier": "3.0.3",
-    "rollup": "3.29.4",
-    "supertest-fetch": "1.5.0",
-    "tslib": "2.6.2",
-    "tsm": "^2.3.0",
-    "typescript": "5.2.2",
-    "uvu": "0.5.6"
+    "@types/express-session": "1.18.0",
+    "@types/node": "22.5.5",
+    "@vitest/coverage-v8": "2.1.1",
+    "express-session": "1.18.0",
+    "husky": "9.1.6",
+    "milliparsec": "4.0.0",
+    "supertest-fetch": "2.0.0",
+    "typescript": "5.6.2",
+    "vitest": "2.1.1"
   },
   "dependencies": {
-    "@tinyhttp/cookie": "2.1.0",
-    "@tinyhttp/cookie-signature": "2.1.0"
+    "@tinyhttp/cookie": "2.1.1",
+    "@tinyhttp/cookie-signature": "2.1.1"
   }
 }

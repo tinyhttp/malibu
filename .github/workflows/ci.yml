@@ -30,9 +30,8 @@ jobs:
           version: 8
       - run: pnpm install
       - run: pnpm test:coverage
-      - run: pnpm test:report
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ./coverage.lcov
+          path-to-lcov: ./coverage/lcov.info

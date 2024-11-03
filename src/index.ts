@@ -1,16 +1,16 @@
-import { IncomingMessage, ServerResponse } from 'http'
-import { ParsedUrlQuery } from 'querystring'
-import { serialize, SerializeOptions } from '@tinyhttp/cookie'
+import type { IncomingMessage, ServerResponse } from 'node:http'
+import type { ParsedUrlQuery } from 'node:querystring'
+import { type SerializeOptions, serialize } from '@tinyhttp/cookie'
 import { sign } from '@tinyhttp/cookie-signature'
 import { Tokens } from './token'
 
 export interface CSRFRequest extends IncomingMessage {
   csrfToken(): string
   secret?: string | string[]
-  signedCookies?: any
-  cookies?: any
+  signedCookies?: Record<string, string>
+  cookies?: Record<string, string>
   query?: ParsedUrlQuery
-  body?: any
+  body?: Record<string, never>
 }
 
 // HTTP Method according to MDN (https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
@@ -26,7 +26,7 @@ export interface CSRFOptions {
   middleware?: MiddlewareOptions
   cookie?: CookieOptions
   sessionKey?: string
-  value?: (req: CSRFRequest | IncomingMessage) => any
+  value?: (req: CSRFRequest | IncomingMessage) => string | string[]
   ignoreMethod?: HTTPMethod[]
   saltLength?: number
   secretLength?: number
@@ -81,7 +81,7 @@ export function csrf(opts: CSRFOptions = {}): (req: CSRFRequest, res: ServerResp
       throw new Error('misconfigured csrf')
     }
 
-    let secret = getSecret(req, options.sessionKey, options.cookie, options.middleware)
+    let secret: string | undefined = getSecret(req, options.sessionKey, options.cookie, options.middleware)
     let token: string
 
     req.csrfToken = (): string => {
@@ -111,7 +111,7 @@ export function csrf(opts: CSRFOptions = {}): (req: CSRFRequest, res: ServerResp
 
 function defaultValue(req: CSRFRequest): string | string[] {
   return (
-    req.body?._csrf ||
+    (req?.body?._csrf as string) ||
     req.query?._csrf ||
     req.headers['csrf-token'] ||
     req.headers['xsrf-token'] ||
@@ -137,11 +137,16 @@ function verifyConfiguration(
   return true
 }
 
-function getSecret(req: CSRFRequest, sessionKey: string, cookie: CookieOptions, middleware: MiddlewareOptions): string {
-  const bag = getSecretBag(req, sessionKey, cookie, middleware)
+function getSecret(
+  req: CSRFRequest,
+  sessionKey: string,
+  cookie: CookieOptions,
+  middleware: MiddlewareOptions
+): string | undefined {
+  const bag: Record<string, string> | undefined = getSecretBag(req, sessionKey, cookie, middleware)
   const key = middleware === 'cookie' ? cookie.key : 'csrfSecret'
 
-  return bag[key]
+  return bag ? bag[key] : undefined
 }
 
 function getSecretBag(
@@ -149,9 +154,13 @@ function getSecretBag(
   sessionKey: string,
   cookie: CookieOptions,
   middleware: MiddlewareOptions
-): string {
+): Record<string, string> | undefined {
   if (middleware === 'cookie' && cookie) {
-    return cookie.signed ? req?.signedCookies : req?.cookies
+    if (cookie.signed) {
+      return req?.signedCookies
+    }
+
+    return req?.cookies
   }
   return req[sessionKey]
 }

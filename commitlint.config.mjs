@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const defaultConfig = require('@commitlint/config-conventional')
+import defaultConfig from '@commitlint/config-conventional'
 
-module.exports = {
+export default {
   extends: ['@commitlint/config-conventional'],
   rules: {
     ...defaultConfig.rules,
