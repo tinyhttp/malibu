@@ -47,7 +47,7 @@
     "milliparsec": "4.0.0",
     "supertest-fetch": "2.0.0",
     "typescript": "5.6.2",
-    "vitest": "2.1.1"
+    "vitest": "2.1.9"
   },
   "dependencies": {
     "@tinyhttp/cookie": "2.1.1",
